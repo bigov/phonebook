@@ -346,7 +346,7 @@ class Viewer extends Db {
       }
 
       $img = PHOTOS . 'ph' . $emp['id'] . '.jpg';
-      if ( !file_exists($img) ) $img = PHOTOS . 'ph0.gif';
+      if ( !file_exists($img) ) $img = 'img/' . 'ph0.gif';
       $img = ROOTURL . $img;
 
       $smarty = $this->render;
