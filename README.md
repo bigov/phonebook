@@ -5,7 +5,7 @@ Phonebook for corporate LAN
 
 ![Tree structure view](install/title.png)
 
-![Search dialog](install/searc.png)
+![Search dialog](install/search.png)
 
 ![Emplyerr view](install/employer.png)
 
