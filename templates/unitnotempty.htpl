@@ -1,0 +1,12 @@
+<h3 style="color: red;">Невозможно удалить</h3> 
+<div class="edit">
+<h4>{$path}</h4>
+<p>Причина: наличие вложенных объектов. Для удаления из Справочника
+подразделения необходимо чтобы в нем небыло ни подчиненных подразделений ни
+записей о должностях. 
+</div>
+
+<form name="form" method="post" 
+	action="{$smarty.const.ROOTURL}view/units/unitid/{$unitid}">
+<p class="center"><input class="std" type="submit" value=" Продолжить "></p>
+</form>

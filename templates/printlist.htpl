@@ -1,0 +1,28 @@
+<ul class="print_list">
+
+{foreach from=$phones item=row}
+
+<li>{$row.unit}</li>
+
+{if !empty( $row.jobs )}
+<dl>
+{foreach from=$row.jobs item=jobrow  name=sub}
+<dt>
+{$jobrow.job}{if !empty($jobrow.kab)} (каб. {$jobrow.kab}){/if}
+</dt>
+<dd>{$jobrow.name|default: "/ нет данных /"} 
+{if !empty($jobrow.phone)}: {$jobrow.phone}{/if} 
+{if !empty($jobrow.fax)}, {$jobrow.fax}{/if}
+{if !empty($jobrow.phones)}, {$jobrow.phones}{/if}
+{if !empty($jobrow.email)}, {$jobrow.email}{/if}
+ </dd>
+{/foreach}
+</dl>
+{/if}
+
+{if isset( $row.branch )}
+	{include file="printlist.htpl" phones=$row.branch}
+{/if}
+
+{/foreach}
+</ul>

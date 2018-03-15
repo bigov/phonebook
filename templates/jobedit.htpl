@@ -1,0 +1,58 @@
+
+<div class="edit">
+<h3>Корректировка должности</h3>
+<!-- start form -->
+<form name="form_edit" method="post" action="" onSubmit="return FormCheck();">
+<SCRIPT TYPE="text/javascript" SRC="{$ROOTURL}inc/editjob.js"></SCRIPT>	
+<hr />
+<table><tr>
+  <td colspan="2">{$form_data.path}</td>
+</tr><tr>
+  <th>должность:</th>
+  <td><input id="job" name="new_job" class="edit_off" readonly="readonly" 
+  	type="text" value="{$form_data.job}"></td>
+</tr><tr>
+  <th>кабинет:</th>
+  <td><input id="kab" name="new_kab" class="edit_off" readonly="readonly"
+  	type="text" value="{$form_data.kab}"></td>
+</tr><tr>
+  <th>осн.телефон:</th>
+  <td><input id="phone" name="new_phone" class="edit_off" readonly="readonly"
+  	type="text" value="{$form_data.phone}"></td>
+</tr><tr>
+  <th>факс, тел.:</th>
+  <td> <input id="fax" name="new_fax" class="edit_off" readonly="readonly"
+  	type="text" value="{$form_data.fax}"></td>
+</tr><tr>
+  <th>опции:</th>
+  <td>
+    {html_options name=new_anonid class="edit_off" options=$anons selected=$form_data.anonid}
+  </td>
+</tr><tr>
+  <th>инд.сортировки:</th>
+  <td> <input id="order" name="new_order" class="edit_off" readonly="readonly"
+  	type="text" value="{$form_data.order}"></td>
+</tr></table>
+
+<input name="jobid" type="hidden" value="{$form_data.jobid}">
+<input name="new_unitid" type="hidden" value="{$form_data.unitid}">
+<hr />
+
+<input class="radio" type="RADIO" name="func" VALUE="deletecheck" 
+  	onClick="delete_rec(this.form)"><label class="std">удалить запись</label>
+<br />
+<input class="radio" type="RADIO" name="func" VALUE="editcheck"
+  	onClick="edit_rec(this.form)"><label class="std">редактировать данные</label>
+<br />
+<input class="radio" type="RADIO" name="func" VALUE="move"
+  	onClick="delete_rec(this.form)"><label class="std">cменить подразделение</label>
+
+<p class="center">
+<input id="submit" type="submit" class="hidden std" value="продолжить">
+</p>			
+
+</form></div>
+
+{if empty($form_data.employer)}
+<p class="center"><a href="{$ROOTURL}employer/new/jobid/{$form_data.jobid}/">Назначить сотрудника</a></p>
+{/if}

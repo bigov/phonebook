@@ -1,0 +1,31 @@
+
+<form name="form" method="post" action="{$ROOTURL}employer/newcheck/" onSubmit="return NameCheck();">
+<SCRIPT TYPE="text/javascript" SRC="{$ROOTURL}inc/selectjob.js"></SCRIPT>	
+
+<h3>Добавление сотрудника</h3><hr>
+
+<table class="show"><tr>
+	<th width="150px">новый сотрудник: </th><td><input id="name" name="new_name"
+	type="text" value="Фамилия Имя Отчество"></td>
+</tr><tr>
+	<th>телефон мобильный, домашний: </th><td><input id="phones" name="new_phones"
+	type="text" value=""></td>
+</tr><tr>
+	<th>email:</th><td><input id="email" name="new_email" type="text" value=""></td>
+</tr></table>
+
+<p>Из списка имеющихся вакансий выберите должность:</p> 
+
+<div class="select">
+{if !empty($form_data.jobid)}
+{html_options name=new_jobid options=$vacancys onClick="submit_on(this.form)" size=$vacancys|@count
+selected=$form_data.jobid}
+{else}
+{html_options name=new_jobid options=$vacancys onClick="submit_on(this.form)" size=$vacancys|@count}
+{/if}
+</div>
+<p>
+<input id="submit" type="submit" value=" Добавить сотрудника" class="hidden">
+</p>
+
+</form>

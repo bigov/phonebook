@@ -1,0 +1,13 @@
+<div class="edit">
+
+<h3>Перевести сотрудника:</h3>
+
+<ul>
+{foreach from=$rows item=row}
+
+<li>({$row.mod}) {$row.name}</li>
+
+{/foreach}
+</ul>
+
+</div>

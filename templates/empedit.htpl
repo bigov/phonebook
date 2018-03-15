@@ -1,0 +1,85 @@
+<h3>Редактирование данных</h3>
+
+<div class="edit">
+
+<h4>Информация о должности</h4>
+<hr>
+
+<table>
+<tr><td>Место&nbsp;работы:</td><td style="background-color: #FFFFFF;">{$form_data.path}</td></tr>
+<tr><td>должность:</td><td style="background-color: #FFFFFF;">{$form_data.job}</td></tr>
+{if !empty($form_data.kab)}
+<tr><td>кабинет:</td><td style="background-color: #FFFFFF;">{$form_data.kab}</td></tr>
+{/if}
+<tr><td>осн. телефон:</td><td style="background-color: #FFFFFF;">{$form_data.phone}</td></tr>
+<tr><td>факс, тел.:</td><td style="background-color: #FFFFFF;">{$form_data.fax}</td></tr>
+</table>
+<p class="center"><a href="{$ROOTURL}job/edit/jobid/{$form_data.jobid}/">корректировка данных</a>
+&nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="{$ROOTURL}employer/move/id/{$form_data.id}/">перевод на другую должность</a><br>
+
+</p>
+</div><p>&nbsp;</p>
+
+<form name="form_edit" method="post" action="{$ROOTURL}employer/editcheck/"
+	onSubmit="return FormCheck();">
+<SCRIPT TYPE="text/javascript" SRC="{$ROOTURL}inc/editname.js"></SCRIPT>   
+            
+<div class="edit">
+<div style="width: 650px; float: left;">
+<h4>Информация о сотруднике</h4><hr>
+
+<table>
+<tr>
+  <td><label>Ф.И.О.:</label></td>
+  <td><input id="name" name="new_name" class="edit_off" readonly="readonly"
+   type="text" value="{$form_data.name}"></td>
+</tr>
+
+<tr>
+  <td><label>дом.,моб.:</label></td>
+  <td> <input id="phones" name="new_phones" class="edit_off" readonly="readonly"
+   type="text" value="{$form_data.phones}"></td>
+</tr>
+
+<tr>
+  <td><label>емайл:</label></td>
+  <td> <input id="email" name="new_email" class="edit_off" readonly="readonly"
+   type="text" value="{$form_data.email}">  </td>
+</tr></table>
+
+<input name="id" type="hidden" value="{$form_data.id}">
+<input name="new_unitid" type="hidden" value="{$form_data.unitid}">
+<input name="new_jobid" type="hidden" value="{$form_data.jobid}">
+<input name="new_job" type="hidden" value="{$form_data.job}">
+<input name="new_kab" type="hidden" value="{$form_data.kab}">
+<input name="new_phone" type="hidden" value="{$form_data.phone}">
+<input name="new_fax" type="hidden" value="{$form_data.fax}">
+<input name="new_kab" type="hidden" value="{$form_data.kab}">
+<input name="new_order" type="hidden" value="{$form_data.order}">
+<input name="new_anonid" type="hidden" value="{$form_data.anonid}">
+
+<p></p>
+
+<p>
+<input class="radio" type="RADIO" name="func" VALUE="deletecheck" 
+   onClick="delete_name(this.form)">
+&nbsp;&nbsp;<label>удалить сотрудника</label><br>
+
+<input class="radio" type="RADIO" name="func" VALUE="editcheck"
+   onClick="edit_on(this.form)">
+&nbsp;&nbsp;<label>корректировать данные</label></p>
+
+</div>
+<div style="width: 160px; float: right;">
+<img class="face" style="float: right; margin: 20px 0 10px 0;" alt="" src="{$ROOTURL}photos/ph{$form_data.id}.jpg">
+<p class="center"><a href="{$ROOTURL}employer/photopost/id/{$form_data.id}/">Изменить фото</a></p>
+</div>
+
+<div style="width: 750px;">
+<p class="center"><input id="submit" name="submit" type="submit"
+	value="Продолжить" class="std" style="visibility: hidden;">
+</p>
+</div>
+   
+</form></div><!-- /edit -->

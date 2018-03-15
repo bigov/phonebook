@@ -1,0 +1,40 @@
+<h3>Удалить данные?</h3> 
+<div class="edit">
+<p>{$job_data.path}</p>
+<table class="show">
+<thead><tbody><tr>
+	<th>должность:</th><td>{$job_data.job}</td>
+</tr><tr>
+	<th>кабинет №:</th><td>{$job_data.kab}</td>
+</tr><tr>
+	<th>осн. телефон:</th><td>{$job_data.phone}</td>
+</tr><tr>
+	<th>факс, телефон:</th><td>{$job_data.fax}</td>
+</tr><tr>
+	<th>опции:</th><td>{$job_data.anon}</td>
+</tr></tbody></table>
+
+<form name="form" method="post" 
+	action="{$smarty.const.ROOTURL}job/deletesave/jobid/{$job_data.jobid}/">
+
+<input name="job" type="hidden" value="{$job_data.job}">
+<input name="kab" type="hidden" value="{$job_data.kab}">
+<input name="phone" type="hidden" value="{$job_data.phone}">
+<input name="fax" type="hidden" value="{$job_data.fax}">
+<input name="unitid" type="hidden" value="{$job_data.unitid}">
+<input name="order" type="hidden" value="{$job_data.order}">
+<input name="anonid" type="hidden" value="{$job_data.anonid}">
+
+{if isset($form_data.opid)}
+<p>
+<input name="opid" type="hidden" value="{$form_data.opid}">
+
+<input class="radio" type="RADIO" name="level" VALUE="up" checked="checked">&nbsp;&nbsp;<label>Принять изменения</label>
+<br>
+<input class="radio" type="RADIO" name="level" VALUE="dn">&nbsp;&nbsp;<label>Отклонить изменения</label>
+</p>
+{/if}
+
+<p class="center"><input class="std" type="submit" value=" Удалить "></p>
+
+</form></div>

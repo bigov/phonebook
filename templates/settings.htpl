@@ -1,0 +1,86 @@
+<div class="edit" style="padding: 1em 1em 1em 1em;">
+{include file="help.htpl"}
+</div>
+
+{if $level>10}{if !empty($names)}
+<div class="edit">
+<h3>Ожидают согласования изменения сотрудников:</h3>
+<ul>
+{foreach from=$names item=row}
+<li>({$row.mod}) <a href="{$ROOTURL}employer/{$row.mod}check/nmid/{$row.nmid}">
+{$row.new_name}</a></li>
+{/foreach}
+</ul></div>
+{/if}{/if}
+
+
+{if $level>10}{if !empty($jobs)}
+<div class="edit">
+<h3>Ожидают согласования изменения должностей:</h3>
+<ul>
+{foreach from=$jobs item=row}
+<li>({$row.mod}) <a href="{$ROOTURL}job/{$row.mod}check/jobid/{$row.jobid}/jmid/{$row.jmid}">
+{$row.new_job}</a></li>
+{/foreach}
+</ul></div>
+{/if}{/if}
+
+
+{if $level<4}
+{include file="activator.htpl"}
+{/if}
+
+<div class="edit">
+<p>Доступные функции:
+<ul>
+<li><a href="{$ROOTURL}employer/new/">Добавить сотрудника на вакантную должность</a></li>
+<li>Корректировка данных сотрудников ( через персональные карточки )</li>
+<li>Корректировка данных дежурных должностей ( через поиск )</li>
+<li>Удаление данных ( через поиск, через карточку )</li>
+
+{if $level>50}
+<li><a href="{$ROOTURL}units/list/">Изменение структуры справочника</a></li>
+{/if}
+
+
+</ul>
+</p>
+</div>
+
+<div class="edit">
+<p>Контроль данных:
+<ul>
+<li><a href="{$ROOTURL}operator/fotos">Состояние фото-архива</a></li>
+</ul>
+</p>
+</div>
+
+
+
+<script type="text/javascript">
+
+hide_element( document.getElementById( "help" ) );
+hide_element( document.getElementById( "activator" ) );
+
+function hide_element( el ) {
+   el.style.visibility='hidden';
+   el.style.display='none';
+}
+
+function show_element( el ) {
+   el.style.visibility='visible';
+   el.style.display='block';
+}
+
+function switch_el( id ) {
+  var el;
+  el = document.getElementById( id );
+  if ( el.style.visibility=='visible' ) {
+    hide_element( el );
+  } else {
+    show_element( el );
+  }
+  return false;
+}
+
+</script>

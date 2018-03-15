@@ -1,0 +1,29 @@
+
+
+<h3>Загрузка фотографии</h3>
+
+<form action="{$ROOTURL}employer/photosave/" method="POST">
+
+<div class="edit" style="width:400px; margin: 0 auto 2em auto; padding: 1em;">
+<table><tr><td width="150px">
+
+<img class="face" style="float: left; margin: 20px 20px 10px 0;" alt=""
+src="{$ROOTURL}photos/new/ph{$form_data.id}.jpg">
+
+</td><td>
+
+
+<h4>{$form_data.name}</h4>
+
+<input name="id" type="hidden" value="{$form_data.id}">
+
+
+</td></tr></table>
+</div>
+
+<p class="center">
+<input id="submit" name="submit" type="submit" value="Подтвердить" class="std">
+</p>   
+
+
+</form>

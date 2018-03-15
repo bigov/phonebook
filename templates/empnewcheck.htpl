@@ -1,0 +1,42 @@
+<h3>Добавление сотрудника:</h3>
+
+<div class="edit">
+<h4>{$form_data.path}</h4>
+<table class="show">
+<tbody><tr>
+	<th>должность:</th><td>{$form_data.job}</td>
+</tr><tr>
+	<th>кабинет №:</th><td>{$form_data.kab}</td>
+</tr><tr>
+	<th>сотрудник: </th><td>{$form_data.new_name}</td>
+</tr><tr>
+	<th>основной телефон:</th><td>{$form_data.phone}</td>
+</tr><tr>
+	<th>факс, доп. телефон:</th><td>{$form_data.fax}</td>
+</tr><tr>
+	<th>домашний, мобильный:</th><td>{$form_data.new_phones}</td>
+</tr><tr>
+	<th>email:</th><td>{$form_data.new_email}</td>
+</tr></tbody></table>
+
+<form name="form" method="post" action="{$smarty.const.ROOTURL}employer/newsave/">
+<input name="jobid"  type="hidden" value="{$form_data.jobid}">
+<input name="unitid"  type="hidden" value="{$form_data.unitid}">
+<input name="name"   type="hidden" value="{$form_data.new_name}">
+<input name="phones" type="hidden" value="{$form_data.new_phones}">
+<input name="email"  type="hidden" value="{$form_data.new_email}">
+
+{if isset($form_data.opid)}
+<p>
+<input name="opid" type="hidden" value="{$form_data.opid}">
+<input class="radio" type="RADIO" name="level" VALUE="up" checked="checked">&nbsp;<label>Принять изменения</label>
+<br>
+<input class="radio" type="RADIO" name="level" VALUE="dn">&nbsp;<label>Отклонить изменения</label>
+</p><p class="center">
+<input type="submit" value=" Продолжить ">
+{else}
+<p class="center">
+<input type="submit" value=" Записать ">
+{/if}
+</p>
+</form>

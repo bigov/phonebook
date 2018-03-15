@@ -1,0 +1,39 @@
+<h2>Результат поиска:</h2>
+{if count($rows) < 1}
+<p>Текст {$replacement} не найден.</p>
+{else}
+<ul class="q_results">
+{foreach from=$rows item=row}<li>
+
+{$row.unit} » <a href="{$ROOTURL}view/usercard/id/{$row.id}/jobid/{$row.jobid}"
+	class="over" style="font-weight: normal;">{$row.job}
+
+{if isset($row.name)}
+| {$row.name}
+{/if}
+
+{if isset($row.phone)}
+| {$row.phone}
+{/if}
+
+{if isset($row.phones)}
+:: {$row.phones}
+{/if}
+
+{if isset($row.fax)}
+:: {$row.fax}
+{/if}
+
+{if isset($row.email)}
+:: {$row.email}
+{/if}
+
+{if !empty($row.kab)}
+:: каб. {$row.kab}
+{/if}
+
+</a></li>{/foreach}
+
+</ul>
+
+{/if}

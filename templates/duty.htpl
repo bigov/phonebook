@@ -1,0 +1,4 @@
+<h2>Список дежурных служб</h2>
+<ul>
+  {foreach from=$duty item=row}<li>{$row}</li>{/foreach}
+</ul>

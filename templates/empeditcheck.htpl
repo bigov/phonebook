@@ -1,0 +1,56 @@
+<div class="edit">
+<h3>Корректировка данных:</h3>
+
+<table class="show">
+<thead><tr>
+	<th>&nbsp;</th><th>текущие данные</th><th>новые данные</th>
+</tr></thead><tbody><tr>
+	<th>должность:</th>
+	<td>{$form_data.job}</td><td>{$form_data.new_job}</td>
+</tr><tr>
+	<th>кабинет №:</th>
+	<td>{$form_data.kab}</td><td>{$form_data.new_kab}</td>
+</tr><tr>
+	<th>сотрудник: </th>
+	<td>{$form_data.name}</td><td>{$form_data.new_name}</td>
+</tr><tr>
+	<th>осн. телефон:</th>
+	<td>{$form_data.phone}</td><td>{$form_data.new_phone}</td>
+</tr><tr>
+	<th>факс, телефон:</th>
+	<td>{$form_data.fax}</td><td>{$form_data.new_fax}</td>
+</tr><tr>
+	<th>дом., мобильн:</th>
+	<td>{$form_data.phones}</td><td>{$form_data.new_phones}</td>
+</tr><tr>
+	<th>email:</th>
+	<td>{$form_data.email}</td><td>{$form_data.new_email}</td>
+</tr></tbody></table>
+
+<form name="form" method="post" action="{$ROOTURL}employer/editsave/">
+<input name="id"     type="hidden" value="{$form_data.id}">
+<input name="jobid"  type="hidden" value="{$form_data.new_jobid}">
+<input name="name"   type="hidden" value="{$form_data.new_name}">
+<input name="phones" type="hidden" value="{$form_data.new_phones}">
+<input name="email"  type="hidden" value="{$form_data.new_email}">
+<input name="unitid" type="hidden" value="{$form_data.new_unitid}">
+<input name="kab"    type="hidden" value="{$form_data.new_kab}">
+<input name="job"    type="hidden" value="{$form_data.new_job}">
+<input name="phone"  type="hidden" value="{$form_data.new_phone}">
+<input name="fax"    type="hidden" value="{$form_data.new_fax}">
+<input name="order"  type="hidden" value="{$form_data.new_order}">
+<input name="anonid" type="hidden" value="{$form_data.new_anonid}">
+
+{if isset($form_data.opid)}
+<p>
+<input name="opid" type="hidden" value="{$form_data.opid}">
+<input class="radio" type="RADIO" name="level" VALUE="up" checked="checked">&nbsp;<label>Принять изменения</label>
+<br>
+<input class="radio" type="RADIO" name="level" VALUE="dn">&nbsp;<label>Отклонить изменения</label>
+</p>
+<p class="center"><input class="std" type="submit" value="Продолжить"></p>
+{else}
+<p class="center"><input class="std" type="submit" value="Записать"></p>
+{/if}
+
+</form></div>

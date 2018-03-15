@@ -1,0 +1,15 @@
+
+<div class="brand"></div>
+
+<div id="usercard">
+<h2>Поиск данных</h2>
+
+<form onload="document.getElementById("InputSr").focus();" action="{$smarty.const.ROOTURL}view/search/" method="get" class="right">
+<input id="InputSr" class="search" name="query" type="text" value="" autofocus />
+<script>
+setTimeout( document.getElementById("InputSr").focus(), 5000 );
+</script>
+
+</form>
+		
+</div>

@@ -1,0 +1,27 @@
+{if !isset( $unit_id )}
+    {assign var=unit_id value='-1'}
+{/if}
+
+<ul class="unit_list">
+
+{foreach from=$units item=row}
+{if !($unit_id==$row.unitid)}
+<li><p>{$row.unit}
+
+  {if isset( $row.emptys )}
+  <ul><li>
+    {foreach from=$row.emptys item=name key=id}
+      <a href="{$ROOTURL}view/usercard/id/{$id}" class="over">{$name}</a>;
+    {/foreach}
+  </li></ul>
+  {/if}
+</li>
+
+
+{if isset( $row.branch )}
+    {include file="fotos_tree.htpl" units=$row.branch}
+{/if}
+
+{/if}
+{/foreach}
+</ul>

@@ -1,0 +1,30 @@
+
+
+<h3>Загрузка фотографии</h3>
+
+<div class="edit" >
+<form name="upload" action="{$ROOTURL}employer/photocheck/" method="POST" ENCTYPE="multipart/form-data">
+
+<img class="face" style="float: left; margin: 20px 20px 10px 0;" alt=""
+src="{$ROOTURL}photos/ph{$form_data.id}.jpg">
+
+<h4>{$form_data.name}</h4>
+<hr>
+
+<input name="id" type="hidden" value="{$form_data.id}">
+
+<p>Внимание: для размещения принимаются только графические файлы в формате
+JPG, разрешением 150x150 пикселей, размером не более 100 Kб.</p>
+<hr>
+<br />
+
+<p>
+Файл для загрузки: 
+<input type="file" name="userfile"><br />
+
+<p class="center">
+<input id="submit" name="submit" type="submit" value="Загрузить" class="std">
+</p>   
+
+</form>
+</div><!-- /edit -->

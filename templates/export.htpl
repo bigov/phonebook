@@ -1,0 +1,36 @@
+{include file="html_header.htpl"}
+
+<div id="page">
+<table class="page"><tr>
+
+<td id="content">
+
+<ul class="unit_list">
+{foreach name=top from=$rows item=row key=unitid}
+    <li><a class="unit" 
+        href="{$smarty.const.ROOTURL}view/exportcsv/unitid/{$row.unitid}">
+            {$row.unit}</a></li>
+{/foreach}
+</ul>
+
+
+</td><!-- /content -->
+
+<td id="labels">
+<ul class="labels">
+{if !isset($push)}{assign var='push' value='99'}{/if}
+
+{foreach from=$labels item=label key=i}
+{if $i==$push}
+<li class="current">{$label.label}</li>
+{else}
+<li><a href="{$label.href}">{$label.label}</a></li>
+{/if}
+{/foreach}
+</ul>
+</td><!-- /labels -->
+
+</tr></table>
+</div><!-- /page -->
+
+{include file="html_footer.htpl"}

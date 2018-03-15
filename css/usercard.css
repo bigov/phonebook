@@ -1,0 +1,70 @@
+@CHARSET "UTF-8";
+div.brand {
+  background: #FFFFFF url(../img/brand.gif) 1px 1px no-repeat;
+  width: 100%;
+  height: 30px;
+  border-bottom: solid 1px #CDCDCD;
+  margin-bottom: 16px;
+}
+img.face {
+  width: 150px;
+  height: 150px;
+  padding: 2px;
+  border: solid 2px #CDCDCD;
+}
+hr.light {
+/* Панель редактирования в статусной строке */
+  height: 0px;
+}
+#usercard {
+  color: #434343;
+  background-color: #FFFFFF;
+  width: 576px;
+}
+#usercard h2 {
+  color: #263483;
+  margin: 0 0 20px 0;
+  padding: 0 0 0 0;
+}
+#usercard h3 {
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+#usercard table {
+  width: 100%;
+  border: none;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+#usercard table td{
+  vertical-align: top;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+#usercard p {
+  font-style: italic;
+  margin: 10px 0 0 0;
+  padding: 0 0 0 0;
+}
+#usercard ul {
+  margin: 12px 0 0 32px;
+  padding: 0 0 0 0;
+  color: #636363;
+}
+#usercard .data {
+  color: #232323;
+}
+#useredit {
+  position: absolute;
+  top: 8px;
+  left: 32px;
+}
+#useredit A,
+#useredit A:visited {
+  font-size: small;
+  text-decoration: underline;
+  color: #636363;
+}
+#useredit A:hover {
+  color: #FF4444;
+}

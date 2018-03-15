@@ -1,0 +1,10 @@
+{section name=row loop=$rows start=$start max=$maxrows}
+<div class="row"><a href="{$smarty.const.ROOTURL}view/usercard/id/{$rows[row].id}" class="over">
+{$rows[row].name}<div class="phone">{$rows[row].phone}</div></a></div>
+{/section}{*
+ Если страница не заполнена до конца, то дополним ее пустыми ячейками для
+	отображения горизонтальных линий, разделяющих строки 
+*}{if $smarty.section.row.total < $maxrows}
+{section name=empty loop=( $maxrows - $smarty.section.row.total )}
+<div class="row">&nbsp;</div>
+{/section}{/if}

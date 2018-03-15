@@ -1,0 +1,11 @@
+<div class="edit">
+<p>Перенос должности "<B>{$move.new_job}</B>" в другое подразделение.</p>
+<hr />
+<p>Для перемещения должности выберите новый отдел из списка: 
+</p>
+
+{assign var=job_id value=$move.jobid}
+{assign var=sub_url value="job/movecheck/jobid/$job_id/moveto/"}
+{include file="units_tree.htpl"}
+
+</div>

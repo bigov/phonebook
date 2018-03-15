@@ -1,0 +1,19 @@
+<div class="edit">
+<h3>Изменение в структуре Справочника</h3> 
+<hr>
+<p>
+Переместить подразделение <b>"{$form_data.unit}"</b> (<i>{$path_old}<i/>) в:
+<br /><br />
+<b>{$path_new}</b></p>
+
+<form name="form" method="post" 
+	action="{$smarty.const.ROOTURL}units/editsave/">
+<input type="hidden" name="unitid" value="{$form_data.unitid}">
+<input type="hidden" name="unit" value="{$form_data.unit}">
+<input type="hidden" name="parent" VALUE="{$form_data.moveto}">
+<input type="hidden" name="order" value="{$form_data.order}">
+
+<p class="center"><input class="std" type="submit" value=" Выполнить "></p>
+</form>
+
+</div>

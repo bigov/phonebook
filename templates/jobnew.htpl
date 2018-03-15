@@ -1,0 +1,39 @@
+
+<div class="edit">
+<h3>Ввод новой должности</h3>
+<!-- start form -->
+<form name="form" method="post" action="{$ROOTURL}job/newsave/">
+<hr />
+{$path}
+<hr />
+
+<table><tr>
+  <td width="30%">должность:</th>
+  <td><input name="job" class="edit_on" type="text" value="введите название"></td>
+</tr><tr>
+  <td>кабинет:</th>
+  <td><input name="kab" class="edit_on" type="text" value=""></td>
+</tr><tr>
+  <td>осн.телефон:</th>
+  <td><input name="phone" class="edit_on" type="text" value="00-00-00"></td>
+</tr><tr>
+  <td>факс, тел.:</th>
+  <td><input name="fax" class="edit_on" type="text" value=""></td>
+</tr><tr>
+  <td>опции:</th>
+  <td>
+    {html_options name=anonid options=$anons}
+  </td>
+</tr><tr>
+  <td>очередность сортировки:</th>
+  <td> <input name="order" class="edit_on" type="text" value="99"></td>
+</tr></table>
+
+<input name="unitid" type="hidden" value="{$unitid}">
+<hr />
+
+<p class="center">
+<input type="submit" value="Отправить">
+</p>			
+
+</form></div>

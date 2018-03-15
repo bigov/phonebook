@@ -1,0 +1,30 @@
+<div class="edit">
+<h3>Перевод сотрудника на другую должность</h3>
+<hr>
+<form name="form" method="post" action="{$ROOTURL}employer/movesave/">
+
+<dl>
+<dt>сотрудник:</dt><dd> {$form_data.name}</dd>
+<dt>текущая должность:</dt><dd> {$form_data.path} | {$form_data.job}</dd>
+<dt>новая должность:</dt><dd> {$form_data.new_path} | {$form_data.new_job}</dd>
+</dl>
+
+<input name="id"    type="hidden" value="{$form_data.id}">
+<input name="jobid" type="hidden" value="{$form_data.new_jobid}">
+<input name="unitid" type="hidden" value="{$form_data.unitid}">
+<input name="new_unitid" type="hidden" value="{$form_data.new_unitid}">
+
+{if isset($form_data.opid)}
+<p>
+<input name="opid" type="hidden" value="{$form_data.opid}">
+<input class="radio" type="RADIO" name="level" VALUE="up" checked="checked">&nbsp;&nbsp;<label>Принять изменения</label>
+<br>
+<input class="radio" type="RADIO" name="level" VALUE="dn">&nbsp;&nbsp;<label>Отклонить изменения</label>
+</p>
+{/if}
+</div>
+
+<p style="text-align: center;">
+<input id="submit" type="submit" value=" Продолжить " style="font-size: 14px; padding: 4px 2em 5px 2em;">
+</p>
+</form>

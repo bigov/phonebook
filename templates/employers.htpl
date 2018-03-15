@@ -1,0 +1,7 @@
+<div id="side_left">
+	{include file="employers_list.htpl" start=0 max=$maxrows}
+</div>
+<div id="side_right">
+	{include file="employers_list.htpl" start=$maxrows max=$maxrows}
+</div>
+<br class="clear" />

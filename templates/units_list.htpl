@@ -1,0 +1,7 @@
+<div class="edit">
+<h3>Управление структурой справочника</h3>
+
+{assign var="sub_url" value="units/edit/unitid/"}
+{include file="units_tree.htpl"}
+
+</div>

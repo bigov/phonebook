@@ -1,0 +1,35 @@
+@CHARSET "UTF-8";
+body {
+	font-size: 100%;
+	padding-left: 2em;
+}
+H1 {
+	font-size: 140%;
+}
+UL {
+	padding-left: 0.8em;
+}
+LI {
+	font-size: 90%;
+	border: none;
+	font-family: sans-serif;
+	font-weight: bolder;
+	margin-top: 0.3em;
+	color: #333333;
+}
+DT {
+	font-size: 80%;
+	font-style: italic;
+	font-family: sans-serif;
+	color: #434343;
+	border: none;
+}
+DD {
+	margin-bottom: 0.3em;
+	font-size: 75%;
+	font-family: sans-serif;
+	margin-left: 1.2em;
+	font-weight: normal;
+	color: #000000;
+	border: none;
+}

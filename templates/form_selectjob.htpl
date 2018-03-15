@@ -1,0 +1,21 @@
+
+<h3>Перевод сотрудника на другую должность</h3>
+
+<form name="form" method="post" action="{$ROOTURL}employer/movecheck/">
+<SCRIPT TYPE="text/javascript" SRC="{$ROOTURL}inc/selectjob.js"></SCRIPT>	
+<p>
+<dl>
+<dt>сотрудник:</dt><dd> {$form_data.name}</dd>
+<dt>текущая должность:</dt><dd> {$form_data.path} | {$form_data.job}</dd>
+</dl>
+</p>
+
+<p><i>Укажите новую должность из списка имеющихся вакансий:</i></p> 
+<div class="select">
+{html_options name=new_jobid options=$vacancys onClick="submit_on(this.form)" size=$vacancys|@count}
+</div>
+<input name="id"   type="hidden" value="{$form_data.id}">
+<p>
+<input id="submit" type="submit" value=" Продолжить " class="hidden">
+</p>
+</form>

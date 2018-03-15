@@ -1,0 +1,14 @@
+<div class="edit">
+<h3>Перенос объекта</h3>
+<hr />
+Наименование: <b>{$move.new_unit}</b>
+<hr />
+<p>Расположен в: <i>{$path}</i>. Для перемещения укажите новое родителькое
+подразделение:
+</p>
+
+{assign var=unit_id value=$move.unitid}
+{assign var=sub_url value="units/movecheck/unitid/$unit_id/moveto/"}
+{include file="units_tree.htpl"}
+
+</div>

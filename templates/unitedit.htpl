@@ -1,0 +1,57 @@
+
+<div class="edit">
+<h3>Изменение подразделения</h3>
+<!-- start form -->
+<form name="form" method="post" action="{$ROOTURL}units/">
+<SCRIPT TYPE="text/javascript" SRC="{$ROOTURL}inc/editunit.js"></SCRIPT>	
+<hr />
+<table><tr>
+  <th>расположен:</th>
+  <td>{$unit_rec.path}</td>
+</tr><tr>
+  <th>название:</th>
+  <td><input id="unit" name="new_unit" class="edit_off" readonly="readonly" 
+  	type="text" value="{$unit_rec.unit}"></td>
+</tr><tr>
+  <th>инд.сортировки:</th>
+  <td><input id="order" name="new_order" class="edit_off" readonly="readonly"
+  	type="text" value="{$unit_rec.order}"></td>
+</tr></table>
+
+<input type="hidden" name="unitid" VALUE="{$unit_rec.unitid}">
+<input type="hidden" name="new_parent" VALUE="{$unit_rec.parent}">
+
+
+<hr />
+<p>Выберите действие:</p>
+<input class="radio" type="RADIO" name="func" VALUE="editcheck"
+    onClick="edit_rec(this.form)"><label class="std">редактировать название</label>
+<br />
+<input class="radio" type="RADIO" name="func" VALUE="new"
+    onClick="submit_on(this.form)"><label class="std">создать подразделение</label>
+<br />
+<input class="radio" type="RADIO" name="func" VALUE="addjob"
+    onClick="submit_on(this.form)"><label class="std">ввести новую должность</label>
+<br />
+<input class="radio" type="RADIO" name="func" VALUE="move" 
+    onClick="submit_on(this.form)"><label class="std">переместить</label>
+<br />
+<input class="radio" type="RADIO" name="func" VALUE="deletecheck" 
+  	onClick="submit_on(this.form)"><label class="std">удалить запись</label>
+
+<p class="center">
+<input id="submit" type="submit" class="hidden std" value="продолжить">
+</p>			
+
+</form></div>
+
+<div class="edit">
+<h3>Список должностей</h3>
+
+<ul>
+{foreach from=$jobs item=job}
+<li><a href="{$smarty.const.ROOTURL}job/edit/jobid/{$job.jobid}">{$job.job}</a></li>
+{/foreach}
+</ul>
+
+</div>

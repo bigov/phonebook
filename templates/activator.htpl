@@ -1,0 +1,16 @@
+<div id="levelup">
+<p>Вы можете поднять рейтинг своего рабочего места сразу до уровня 4
+(пользователь) - пропустив начальный уровень. Это позволит Вам сразу
+видеть в телефонном справочнике свои поправки. Для этого надо указать
+свой адрес электронной почты -
+<a href="" onClick="switch_el( 'activator' ); return false;">активировать рабочее место</a>.</p>
+</div><!--  /levelup -->
+
+<div id="activator">
+<form action="{$smarty.const.ROOTURL}operator/activate/">
+<label>Ваш email: </label>
+<input name="email" type="text" value="" />
+<input type="submit" value="активировать" />
+</form>
+
+</div><!--  /activator -->

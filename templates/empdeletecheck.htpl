@@ -1,0 +1,28 @@
+<div class="edit">
+<h3>Удаляем данные?</h3>
+
+<table class="show">
+<tbody><tr>
+	<th>сотрудник: </th><td>{$form_data.name}</td>
+</tr><tr>
+	<th>дом., мобильн:</th><td>{$form_data.phones}</td>
+</tr><tr>
+	<th>email:</th><td>{$form_data.email}</td>
+</tr></tbody></table>
+
+<form name="form" method="post" action="{$smarty.const.ROOTURL}employer/delete">
+<input name="id"     type="hidden" value="{$form_data.id}">
+<input name="unitid" type="hidden" value="{$form_data.unitid}">
+{if isset($form_data.opid)}
+<p>
+<input name="opid" type="hidden" value="{$form_data.opid}">
+<input class="radio" type="RADIO" name="level" VALUE="up" checked="checked">&nbsp;<label>Принять изменения</label>
+<br>
+<input class="radio" type="RADIO" name="level" VALUE="dn">&nbsp;<label>Отклонить изменения</label>
+</p>
+{/if}
+<p class="center">
+<input type="submit" value=" Удалить ">
+</p>
+</form>
+</div>

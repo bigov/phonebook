@@ -1,0 +1,53 @@
+@CHARSET "UTF-8";
+.hidden {
+	visibility: hidden;
+}
+body.edit {
+	background: #F3F3F3 url() 0 0;
+}
+table.show {
+	padding: 0;
+	margin: 0;
+	border-spacing: 0px;
+}
+table.show th {
+	text-align: right;
+	font-variant: small-caps;
+}
+table.show thead {
+	padding: o;
+	margin: 0;
+}
+table.show thead th {
+	text-align: center;
+}
+table.show tr {
+	background-color: #F3F3F3;
+}
+table.show th {
+	background-color: #A6A6A6;
+	color: #FFFFFF;
+}
+table.show td, table.show th {
+	border: transparent solid 0px;
+	border-bottom: solid 1px #B3B3B3;
+	padding: 4px 4px 2px 8px;
+}
+input.edit_off {
+	border: solid 1px #E3E3E3;
+	width: 300px;
+}
+input.edit_on {
+	border: solid 1px #FFB3B3;
+	width: 300px;
+}
+input.radio {
+	padding: 0;
+	margin: 0 0 0 12px;
+}
+td.vmiddle {
+	vertical-align: middle;
+}
+select {
+	font-size: 16px;
+}

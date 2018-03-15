@@ -1,0 +1,4 @@
+<p class="center">
+<img src="{$smarty.const.ROOTURL}img/404.png" style="margin-top: 100px;"/>
+</p>
+<p>Вероятно, Вы ошиблись...</p>

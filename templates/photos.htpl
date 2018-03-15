@@ -1,0 +1,4 @@
+{foreach from=$photos item=photo_id}<div class="cell">
+<a href="{$smarty.const.ROOTURL}view/usercard/id/{$photo_id}" class="over">
+	<img class="cell" src="{$smarty.const.ROOTURL}photos/ph{$photo_id}.jpg" /></a></div>
+{/foreach}

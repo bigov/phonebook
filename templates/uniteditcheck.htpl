@@ -1,0 +1,34 @@
+<!-- start form -->
+<div class="edit">
+<h3>Внесение изменений:</h3> 
+<table class="show">
+<thead><tr>
+	<th>&nbsp;</th><th>текущие данные</th><th>новые данные</th>
+</tr></thead><tbody><tr>
+	<th>название:</th>
+	<td>{$form_data.unit}</td><td>{$form_data.new_unit}</td>
+</tr><tr>
+	<th>сортировка:</th>
+	<td>{$form_data.order}</td><td>{$form_data.new_order}</td>
+</tr></tbody></table>
+
+<form name="form" method="post" 
+	action="{$smarty.const.ROOTURL}units/editsave/">
+<input type="hidden" name="unitid" value="{$form_data.unitid}">
+<input type="hidden" name="unit" value="{$form_data.new_unit}">
+<input type="hidden" name="order" value="{$form_data.new_order}">
+<input type="hidden" name="parent" VALUE="{$form_data.new_parent}">
+
+{if isset($form_data.opid)}
+<p>
+<input name="opid" type="hidden" value="{$form_data.opid}">
+<input class="radio" type="RADIO" name="level" VALUE="up" checked="checked">&nbsp;&nbsp;<label>Принять изменения</label>
+<br>
+<input class="radio" type="RADIO" name="level" VALUE="dn">&nbsp;&nbsp;<label>Отклонить изменения</label>
+</p>
+{/if}
+
+<p class="center"><input class="std" type="submit" value=" Выполнить "></p>
+</form>
+
+</div><!-- /edit -->

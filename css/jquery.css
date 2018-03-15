@@ -1,0 +1,30 @@
+@CHARSET "UTF-8";
+div.overlay {
+	background-image:url(../img/white.png);
+	width:580px;
+	height: 450px;
+	display:none;
+	padding:40px;
+	border: none;
+}
+div.overlay div.close {
+	background-image:url(../img/close.png);
+	position:absolute;
+	right:5px;
+	top:5px;
+	cursor:pointer;
+	height:35px;
+	width:35px;
+}
+#overlay {
+	background-image:url(../img/white.png);
+}
+#overgoop {
+	background-image:url(../img/white.png);
+}
+div.wrap {
+	overflow-y:auto;
+	width:100%;
+	height: 440px;
+	border: none;
+}

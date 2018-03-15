@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" dir="ltr">
+<head>
+<title>Телефонный справочник ОАО "ТГК-14" (автономная версия)</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="ru" />
+<meta name="language" content="ru" />
+
+<style type='text/css'>
+* {margin:0; padding:0}
+/* --- Page Structure  --- */
+html {height:100%}
+body {
+  width:100%;
+  height:101%;
+  background:#FFFFFF;
+  color:#333;
+  font-family: sans-serif;
+  font-size: 16px;
+}
+div.list {
+  display:block;
+  overflow:hidden;
+  width: 750px;
+  border: none;
+  padding: 1em;
+  margin: 0 auto 0 auto;
+  
+}
+a {padding:1px; color:#444; text-decoration:none;}
+a:hover, a:focus, a:active {border-color:#bcd; text-decoration:none; outline:0 none}
+div.list a {
+	border-width:0 0 1px;
+	border-color:#445;
+	border: none;
+}
+div.list a:hover, div.list a:active, div.list a:focus {background-color:#CDCDCD}
+
+/* --- Accordion --- */
+.js #main .accordion {visibility:hidden}
+.js div.list .accordion {display:none}
+.accordion {margin:0; padding:0 10px}
+.accordion li {list-style-type:none}
+.accordion li.last-child {margin-left:19px;}
+div.list ul.accordion ul {margin:0; padding:0 0 0 20px;}
+/*.accordion .outer {border:1px solid #dadada; border-width:0 1px 1px; background: #fff} */
+.accordion .inner {margin-bottom:0; padding:.5em 20px 1em; position:relative; overflow:hidden}
+.accordion .inner .inner {padding-bottom:0}
+.accordion .h {padding-top:.3em} /* vertical padding instead of vertical margin (ie8) */
+.accordion p {margin:.5em 1px 1em}
+a.trigger {
+		display:block;
+		padding-left:20px;
+	   	background-image: url(_URL_PLUS_);
+		background-repeat: no-repeat;
+		background-position: 1px 50%;
+		font-weight: bold;}
+
+a.trigger.open {background-image: url(_URL_MINUS_)}
+.last-child a.trigger{padding-left:1px; background-image:none; font-weight:normal}
+#main a.trigger {background-color:#f0f0f0}
+#main a.trigger.open {border-color:#dadada; background-color:#e7e7e7}
+#main a:hover.trigger.open, #main a:focus.trigger.open, #main a:active.trigger.open {border-color:#bcd}
+div.list a.active{font-weight: bold; color:#f72; text-decoration:none}
+div.list a.m, div.list a.m:hover, div.list a.m:active, div.list a.m:focus {
+	color: #333;
+	background-color: transparent;
+}
+div.list a.m:hover, div.list a.m:focus {
+	color: #3333EE;
+	text-decoration: underline;
+}
+dl {
+	margin: 0.3em 0 0 -28px;
+	padding-left: 20px;
+	
+}
+dt {
+	white-space: nowrap;
+	font-variant: small-caps;
+	font-size: 14px;
+	margin-left: -12px;
+}
+dd strong {
+	color: #555;
+}
+.div_open {
+    display: block;
+    visibility: visible;
+}
+.hidden {
+    display: none;
+    visibility: hidden;
+}
+ul.by_letters {
+    padding: 1em;
+    display: block;
+}
+ul.by_letters li {
+    pagging-bottom: 0.5em;
+    margin-bottom: 1px;
+}
+.menu {
+    /* position: fixed; Фиксированное положение */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /*height: 26px; */
+    background-color: #E5E5FF;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin: 0;
+    text-align: center;
+}
+.menu input { 
+    margin: 2px 0px 2px 4px;
+    padding: 0 4px 0 4px;
+}
+#frame {
+    width: 800px;
+    margin: 0 auto 0 auto;
+    padding-top: 2em;
+}
+#tree {
+    padding-top: 36px;
+}
+#btn, #reload {
+    width: 110px;
+}
+.first {
+    background-color: #E5FFE5;
+}
+.second {
+    background-color: #E5E5FF;
+}
+UL {
+ list-style: none;
+}
+UL.by_letters {
+    border: solid 1px #CDCDCD;
+    padding: 6px;
+    margin-top: 14px;
+}
+UL.by_letters LI {
+    padding: 2px 1em 0.5em 1.5em;
+}
+STRONG {
+ margin-left: -12px;
+}
+</style>
+
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+                 
+function Compare( a, b ) {
+    var res = a.innerHTML.localeCompare(b.innerHTML);
+    return res;
+}
+
+function select_by_letter( letter ) { 
+   $( "#tree" ).removeClass( "list" ).addClass( "hidden" );
+
+   var rows = $("dd:contains("+ letter +")");
+   rows.sort(Compare);
+   var c = "";
+   var row;
+   var row_color = "first";
+
+   for (var i = 0; i < rows.length; i++) {
+        row = rows[i].innerHTML;
+        if (row[8] == letter ) {
+            c += '<li class="'+ row_color +'">' + row + '</li>';
+            if (row_color == "first") {
+                row_color = "second";
+            } else {
+                row_color = "first";
+            }
+        } 
+   }
+   c = '<div id="frame"><ul class="by_letters">' + c + '</ul></div>';
+   $( "#popup_win" ).html( c );
+   $( "#popup_win" ).removeClass( "hidden" ).addClass( "div_open" );
+   $( "#btn" ).addClass( "hidden" );
+   $( "#reload" ).removeClass( "hidden" );
+
+}
+                  
+__jquery_min_js__
+__jquery_nestedAccordion_js__
+$("html").addClass("js");
+$.fn.accordion.defaults.container = false; 
+$(function() {
+  $("#acclist").accordion({initShow: "#current"});
+  $("html").removeClass("js");
+});
+__expand_js__
+//--><!]]>
+</script>
+
+</head><body><div class="menu">
+<input id="btn" type="submit" name=b1 value="РАЗВЕРНУТЬ ВСЕ" onClick="expand_switch();"><input
+  id="reload" class="hidden" type="submit" value="СТРУКТУРА" onClick="window.location.reload();" /><input
+  type="submit" value="А" onClick="select_by_letter('А');" /><input
+  type="submit" value="Б" onClick="select_by_letter('Б');" /><input
+  type="submit" value="В" onClick="select_by_letter('В');" /><input
+  type="submit" value="Г" onClick="select_by_letter('Г');" /><input
+  type="submit" value="Д" onClick="select_by_letter('Д');" /><input
+  type="submit" value="Е" onClick="select_by_letter('Е');" /><input
+  type="submit" value="Ё" onClick="select_by_letter('Ё');" /><input
+  type="submit" value="Ж" onClick="select_by_letter('Ж');" /><input
+  type="submit" value="З" onClick="select_by_letter('З');" /><input
+  type="submit" value="И" onClick="select_by_letter('И');" /><input
+  type="submit" value="К" onClick="select_by_letter('К');" /><input
+  type="submit" value="Л" onClick="select_by_letter('Л');" /><input
+  type="submit" value="М" onClick="select_by_letter('М');" /><input
+  type="submit" value="Н" onClick="select_by_letter('Н');" /><input
+  type="submit" value="О" onClick="select_by_letter('О');" /><input
+  type="submit" value="П" onClick="select_by_letter('П');" /><input
+  type="submit" value="Р" onClick="select_by_letter('Р');" /><input
+  type="submit" value="С" onClick="select_by_letter('С');" /><input
+  type="submit" value="Т" onClick="select_by_letter('Т');" /><input
+  type="submit" value="У" onClick="select_by_letter('У');" /><input
+  type="submit" value="Ф" onClick="select_by_letter('Ф');" /><input
+  type="submit" value="Х" onClick="select_by_letter('Х');" /><input
+  type="submit" value="Ц" onClick="select_by_letter('Ц');" /><input
+  type="submit" value="Ч" onClick="select_by_letter('Ч');" /><input
+  type="submit" value="Ш" onClick="select_by_letter('Ш');" /><input
+  type="submit" value="Щ" onClick="select_by_letter('Щ');" /><input
+  type="submit" value="Э" onClick="select_by_letter('Э');" /><input
+  type="submit" value="Ю" onClick="select_by_letter('Ю');" /><input
+  type="submit" value="Я" onClick="select_by_letter('Я');" />
+</div><!-- /menu -->
+<div id="popup_win" class="hidden"></div>
+<div id="tree" class="list"><ul id="acclist" class="accordion">

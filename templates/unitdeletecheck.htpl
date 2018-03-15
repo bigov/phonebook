@@ -1,0 +1,9 @@
+<h3>Удалить подразделение?</h3> 
+<div class="edit">
+<h4>{$path}</h4>
+<form name="form" method="post" 
+	action="{$smarty.const.ROOTURL}units/deletesave/">
+<input type="hidden" name="unitid" value="{$unitid}">
+</div>
+<p class="center"><input class="std" type="submit" value=" Выполнить "></p>
+</form>

@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="ru">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+<link rel="stylesheet" type="text/css" href="{$smarty.const.ROOTURL}css/style.css"
+    media="screen,projection" />
+<!--[if IE]>
+<link href="{$smarty.const.ROOTURL}css/ie.css" rel="stylesheet" type="text/css">
+<![endif]-->
+
+<title>Телефонный справочник</title>
+
+<script src="{$smarty.const.ROOTURL}inc/jquery-ui-1.11.2/external/jquery/jquery.js"></script>
+<script src="{$smarty.const.ROOTURL}inc/jquery-ui-1.11.2/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="{$smarty.const.ROOTURL}inc/jquery-ui-1.11.2/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" href="{$smarty.const.ROOTURL}inc/jquery-ui-1.11.2/jquery-ui.structure.css" />
+<link rel="stylesheet" type="text/css" href="{$smarty.const.ROOTURL}inc/jquery-ui-1.11.2/jquery-ui.theme.css" />
+
+<script type="text/javascript">
+function popup_win( href ) {  	
+	
+	$.ajax({
+		url: href,
+		success: function( data ) {	$( "#popup_win" ).html( data ); }
+		});
+	
+	var dialog = $( "#popup_win" ).dialog({
+		autoOpen: false,
+		show: {	effect: "scale", duration: 150 },
+		hide: {	effect: "size",	duration: 200 },
+		height: 500, width: 640, modal: false }
+	);
+	dialog.dialog( "open" );
+};
+
+function search_form() {
+	var dialog = $( "#search_form" ).dialog({
+			autoOpen: false,
+			show: {	effect: "scale", duration: 200	},
+			hide: {	effect: "explode", duration: 600 },
+			modal: true,
+			buttons: {
+				" Найти ": function() { $("form#search").submit(); },
+				"Отмена": function() { $( this ).dialog( "close" ); }
+			}
+		});
+	dialog.dialog( "open" );
+};
+
+</script>
+
+<style>
+div#search_form, div#popup_win {
+	display: none;
+}
+form#search input#name {
+	width: 260px;
+	margin: 12px 0 24px 0;
+	padding: 3px;
+}
+</style>
+
+</head><body>
+
+<div id="search_form" title="Поиск:">
+	<form id="search" method="get" action="{$smarty.const.ROOTURL}view/search/">
+	<input type="text" name="query" id="name" value="" class="text ui-widget-content ui-corner-all">
+	</form>
+</div>
+
+	<!-- input type="submit"  value="Найти"/ -->

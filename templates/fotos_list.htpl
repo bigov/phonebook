@@ -1,0 +1,7 @@
+<div class="edit">
+<h3>Отсутствуют фотографии:</h3>
+
+{assign var="sub_url" value="units/edit/unitid/"}
+{include file="fotos_tree.htpl"}
+
+</div>

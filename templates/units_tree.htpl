@@ -1,0 +1,17 @@
+{if !isset( $unit_id )}
+    {assign var=unit_id value='-1'}
+{/if}
+
+<ul class="unit_list">
+
+{foreach from=$units item=row}
+{if !($unit_id==$row.unitid)}
+<li><a href="{$smarty.const.ROOTURL}{$sub_url}{$row.unitid}">{$row.unit}</a></li>
+
+{if isset( $row.branch )}
+    {include file="units_tree.htpl" units=$row.branch}
+{/if}
+
+{/if}
+{/foreach}
+</ul>
