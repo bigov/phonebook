@@ -17,4 +17,4 @@
 
 ## Install
 
-to do...
+см. описание в [Wiki](https://github.com/bigov/phonebook/wiki)
