@@ -5,7 +5,7 @@
 <div id="help">
 <table><tbody><tr><td style="padding: 0 10px 0 10px; width: 50%;">
 
-<p><i>Пожалуйста, относитесь бережно к общему труду, не портите намеренно данные,
+<p><i>Относитесь бережно к общему труду, не портите намеренно данные,
 которые кто-то добавил, если они корректные</i>.</p>
 
 <p>
@@ -14,8 +14,14 @@
 которые считает нужными. </p>
 
 <p>Актуальная версия кода справочника:
-<a
-href="https://github.com/bigov/phonebook.git">https://github.com/bigov/phonebook</a> </p>
+<a target="_blank" href="https://github.com/bigov/phonebook">
+	https://github.com/bigov/phonebook
+</a></p>
+
+<p><b>Справку</b> по работе со Cправочником можно найти на:
+ <a target="_blank" href="https://github.com/bigov/phonebook/wiki">
+  https://github.com/bigov/phonebook/wiki
+</a></p>
 
 <p></p>
 
