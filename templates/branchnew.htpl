@@ -1,0 +1,22 @@
+<div class="edit">
+<h3>Добавление новой структуры</h3>
+<!-- start form -->
+<form name="form" method="post" action="{$ROOTURL}units/newsave">
+<hr />
+
+<table><tr>
+<td width="20%">Укажите название:</td>
+<td><input name="unit" class="edit_on" type="text" value="Название новой ветки"></td>
+</tr><tr>
+<td>порядок сортировки:</td>
+<td><input name="order" class="edit_on" type="text" value="99"></td>
+</tr></table>
+
+<input type="hidden" name="parent" VALUE="{$parent}">
+
+
+<p class="center">
+<input id="submit" type="submit" value="продолжить">
+</p>
+
+</form></div>

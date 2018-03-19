@@ -5,8 +5,12 @@
 <ul class="unit_list">
 
 {foreach from=$units item=row}
+
 {if !($unit_id==$row.unitid)}
+
+{if (0!=$row.unitid)}
 <li><a href="{$smarty.const.ROOTURL}{$sub_url}{$row.unitid}">{$row.unit}</a></li>
+{/if}
 
 {if isset( $row.branch )}
     {include file="units_tree.htpl" units=$row.branch}

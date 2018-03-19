@@ -3,5 +3,10 @@
 
 {assign var="sub_url" value="units/edit/unitid/"}
 {include file="units_tree.htpl"}
-
 </div>
+
+<div class="edit"><p style="text-align: right;">
+
+<a href="{$smarty.const.ROOTURL}units/newbranch">добавить новую структуру</a>
+
+</p></div>

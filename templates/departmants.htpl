@@ -8,12 +8,12 @@
 {foreach name=sub from=$row.jobs item=jobrow}
 <tr><td colspan="4" class="job">{$jobrow.job}</td></tr>
 <tr class="fl">
-	<td><a class="empl over"
-		href="{$smarty.const.ROOTURL}view/usercard/{if !empty( $jobrow.id )}id/{$jobrow.id}/{/if}jobid/{$jobrow.jobid}/"
- 		>{$jobrow.name|default: "/нет данных/"}</a></td>
- 	<td>&nbsp;{$jobrow.phone}</td>
- 	<td>&nbsp;{$jobrow.fax}</td>
- 	<td>&nbsp;{$jobrow.phones}</td>
+  <td><a class="empl over"
+    href="{$smarty.const.ROOTURL}view/usercard/{if !empty( $jobrow.id )}id/{$jobrow.id}/{/if}jobid/{$jobrow.jobid}/"
+    >{$jobrow.name|default: "подробности"}</a></td>
+  <td>&nbsp;{$jobrow.phone}</td>
+  <td>&nbsp;{$jobrow.fax}</td>
+  <td>&nbsp;{$jobrow.phones}</td>
 </tr>
 {/foreach}
 {/if}
@@ -21,7 +21,7 @@
 </TABLE>{/if}
 
 {if isset( $row.branch )}
-	{include file="departmants.htpl" rows=$row.branch}
+  {include file="departmants.htpl" rows=$row.branch}
 {/if}
 
 {/foreach}

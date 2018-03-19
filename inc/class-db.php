@@ -3,7 +3,7 @@ class Db {
 
     use DbMySQL;
     use RenderSmarty;
-    
+
     protected $separator_unit = ' » '; // Разделитель названий в должности
     protected $operator;
 
@@ -12,65 +12,65 @@ class Db {
     public $maxnames = 64;      // Число строк фамилий на развороте
     public $maxrows = 24;       // Число строк в результатах поиска
     public $render;
-    
+
     public function __construct() {
 
         global $request;
         $this->http = $request;
         $this->page_num = $this->http['page'];
-        
+
         // Инициализация сессии пользователя
-      	$this->detect_operator();
-      
-      	// Инициализация шаблона      
-      	$this->render_init();
-      	
-      	// Очистка старых записей
-      	$this->clear_old_rows();
+        $this->detect_operator();
+
+        // Инициализация шаблона
+        $this->render_init();
+
+        // Очистка старых записей
+        $this->clear_old_rows();
     }
 
     /**
      * Создание древовидного списка всех организаций и подразделений
      */
     protected function get_units_tree( $id = 0 ) {
-   	$full_list = $this->get_branch_assoc( $id );
-   		
-   	foreach( $full_list as $key => $branch ) {
+    $full_list = $this->get_branch_assoc( $id );
+
+    foreach( $full_list as $key => $branch ) {
             $sub_list = $this->get_units_tree( $branch['unitid'] );
             if ( count( $sub_list ) > 0 )
-   		$full_list[$key]['branch'] = $sub_list;
+      $full_list[$key]['branch'] = $sub_list;
         }
         if ( $id == 0 ) {
-            // На выходе из рекурсии добавим в массив иерархии корень дерева
-            return array ( 0 =>
-   		array( 'unitid' => 0,
-   	  		'unit' => '--\--',
-   			'order' => 0,
-   			'branch' => $full_list ));
+          // На выходе из рекурсии добавим в массив иерархии корень дерева
+          return array ( 0 =>
+          array( 'unitid' => 0,
+            //'unit' => ' корень "дерева" - не отображается',
+            'order' => 0,
+            'branch' => $full_list ));
         }
         return $full_list;
     }
-   
+
     /**
      * Создание полного списка справочника (для экспорта)
      */
     protected function make_full_list( $unitid = 0 ) {
-	$full_list = $this->get_branch_assoc( $unitid );
+  $full_list = $this->get_branch_assoc( $unitid );
 
-	foreach( $full_list as $key => $branch ) {
+  foreach( $full_list as $key => $branch ) {
             $sub_list = $this->make_full_list( $branch['unitid'] );
             if ( count( $sub_list ) > 0 ) {
-   		$full_list[$key]['branch'] = $sub_list;
+      $full_list[$key]['branch'] = $sub_list;
             }
             $jobs = $this->get_jobs_array( $branch['unitid'] );
             if ( count( $jobs ) > 0 ) {
-            	$full_list[$key]['jobs'] = $jobs; 
+              $full_list[$key]['jobs'] = $jobs;
             }
-   	}
-        
-   	return $full_list;
     }
-    
+
+    return $full_list;
+    }
+
     /**
      * Очитска базы данных от устаревших записей
      */
@@ -85,14 +85,14 @@ class Db {
     /**
      *  Если производится административное согласование, то
      *  следует изменить уровень предложившего изменения
-     */   	
+     */
     protected function check_admin_level() {
         $url = ROOTURL . 'view/units/unitid/' . $this->http['unitid'];
         if( !empty( $this->http['opid']) ) {
-            
+
             $this->update_operator_level();
             $this->clear_mods();
-            
+
             if( $this->http['level']=='dn') {
                 header( 'Location: ' . $url );
                 exit();
@@ -100,7 +100,7 @@ class Db {
         }
         return;
     }
-   
+
     /**
      * Очистка таблиц модификаций после проверки предложеных изменений
      */
@@ -138,5 +138,5 @@ class Db {
         }
         return true;
     }
-    
+
 }
