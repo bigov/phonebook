@@ -13,10 +13,10 @@ function set_constants() {
 	define( 'OPERATOR_MPD', $string);
 	define( 'OPERATOR_IP', $_SERVER["REMOTE_ADDR"]);
 	
-	$root_script = 'index.php';
-	
-	$root_folder = ereg_replace( $root_script, '', urldecode( $_SERVER["SCRIPT_NAME"] )); // ="/phones/"
-	define( 'ROOTURL', 'http://' . HOSTNAME . $root_folder );
+	$_dirs = explode("/", urldecode( $_SERVER["SCRIPT_NAME"] )) ;
+	$root_folder = "/" . $_dirs[1] . "/"; // ="/phones/"
+
+  define( 'ROOTURL', 'http://' . HOSTNAME . $root_folder );
 
 	global $request;
 	$request = array();
@@ -24,8 +24,9 @@ function set_constants() {
 		$request[ $key ] = $val;
 	}
 	
-	$url_string = ereg_replace( $root_folder, '', urldecode( $_SERVER["REQUEST_URI"] ));
-	$url_string = ereg_replace( '/?[^/]*\?[^/]*', '', $url_string );
+	$url_string = preg_replace( "~$root_folder~", '', urldecode( $_SERVER["REQUEST_URI"] ));
+
+	$url_string = preg_replace( '~/?[^/]*\?[^/]*~', '', $url_string );
 	$url_params = explode( '/', $url_string );
 	if ( empty( $url_params[0] )) array_shift( $url_params );
 	

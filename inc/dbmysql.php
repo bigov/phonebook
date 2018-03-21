@@ -425,7 +425,7 @@ trait DbMySQL {
         $sql = "SELECT * FROM `units` WHERE `unitid`=$unitid;";
         $unit = $this->db_query_row($sql);
         if (!$unit) return '';
-        $full_unit = ereg_replace("'", "\"", $unit['unit']);
+        $full_unit = preg_replace("/'/", "\"", $unit['unit']);
 
         $full_unit = '<a class="unit" href="' . ROOTURL . 'view/units/unitid/' . $unitid
           . '">' . $full_unit . '</a>';
