@@ -392,7 +392,7 @@ class Smarty extends Smarty_Internal_TemplateBase {
      * Only used when $debugging_ctrl is set to 'URL'.
      * The name of the URL-parameter that activates debugging.
      *
-     * @var type
+     * //@var type
      */
     public $smarty_debug_id = 'SMARTY_DEBUG';
     /**

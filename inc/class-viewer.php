@@ -273,8 +273,8 @@ class Viewer extends Db {
      * Добавление текста через точку с запятой. Если исходная строка была
      * пустая, то текст добавляется без разделителя.
      *
-     * @param type $src
-     * @param type $new
+     * //@param type $src
+     * //@param type $new
      * @return string
      */
     private function add($src_txt, $add_txt) {

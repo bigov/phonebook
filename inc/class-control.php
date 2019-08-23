@@ -56,7 +56,7 @@ class Control extends Db {
      * фотографий удалить из массива все элементы (названия отделов), у
      * которых нет подчиненных ветвей и нет списка отсутствия фотографий.
      *
-     * @param unknown $units
+     * //@param unknown $units
      */
     private function unset_miss_emptys($units_array) {
         reset($units_array);
