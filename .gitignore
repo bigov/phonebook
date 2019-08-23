@@ -1,3 +1,7 @@
 templates_c
 photos
 inc/config.php
+.settings
+.buildpath
+.project
+
