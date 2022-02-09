@@ -369,9 +369,9 @@ class Viewer extends Db {
         list( $sum_rows, $arr_names ) =
               $this->select_by_text( $query, $this->maxrows, $page );
         if( $sum_rows > 0 ) {
-            while( list( $k, $arr_name ) = each( $arr_names )) {
+            foreach( $arr_names as list( $k, $arr_name ) ) {
                 $arr_names[$k]['unit'] = $this->get_path_unit($arr_name['unitid']);
-                while( list( $key, $name ) = each( $arr_name ))
+                foreach( $arr_name as list( $key, $name ) )
                 {
                     if( $key!='id'     and
                         $key!='jobid'  and
