@@ -384,7 +384,7 @@ trait DbMySQL {
     protected function get_unit( $unitid ) {
         $sql = "SELECT * FROM `units` WHERE `unitid`=$unitid;";
         $unit = $this->db_query_row($sql);
-        $unit['unit'] = ereg_replace("'", "\"", $unit['unit']);
+        $unit['unit'] = preg_replace("/'/", "\"", $unit['unit']);
         return $unit;
     }
 
