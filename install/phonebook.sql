@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Фев 09 2022 г., 11:42
+-- Время создания: Фев 09 2022 г., 12:00
 -- Версия сервера: 5.0.83-community-nt
--- Версия PHP: 5.5.9
+-- Версия PHP: 5.6.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `units` (
 --
 
 INSERT INTO `units` (`unitid`, `unit`, `parent`, `order`) VALUES
-(929, 'Внутренние телефоны', 0, 1),
+(929, 'Маша и Медведь', 0, 1),
 (930, 'Поставщики', 0, 99),
 (931, 'Технический отдел', 929, 99);
 
@@ -216,7 +216,15 @@ CREATE TABLE IF NOT EXISTS `units_history` (
   `opid` int(8) unsigned NOT NULL,
   `ip` varchar(32) collate utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='modifications in names' AUTO_INCREMENT=524 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='modifications in names' AUTO_INCREMENT=526 ;
+
+--
+-- Дамп данных таблицы `units_history`
+--
+
+INSERT INTO `units_history` (`umid`, `unitid`, `unit`, `parent`, `order`, `opid`, `ip`, `date`) VALUES
+(524, 929, 'Внутренние телефоны', 0, 1, 0, '127.0.0.1', '2022-02-09 20:55:35'),
+(525, 929, 'Внутренние телефоны', 0, 1, 0, '127.0.0.1', '2022-02-09 20:57:50');
 
 -- --------------------------------------------------------
 
@@ -353,7 +361,7 @@ AUTO_INCREMENT=932;
 -- AUTO_INCREMENT for table `units_history`
 --
 ALTER TABLE `units_history`
-AUTO_INCREMENT=524;
+AUTO_INCREMENT=526;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
