@@ -1,3 +1,18 @@
+
+Настройка базы данных
+  mysql> CREATE DATABASE phones CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+Настройка пользователя (в версии MySQL 8.0)
+  mysql> CREATE USER 'phuser'@'localhost' IDENTIFIED WITH mysql_native_password BY 'phpass';
+
+Назначение привилегий
+  mysql> GRANT ALL ON `phones`.* TO 'phuser'@'localhost';
+  mysql> flush privileges;
+
+Загрузка дампа данных
+  > mysql -u root -p phones < install/phonebook.sql
+
+
 Доработки
 -------------------
 
