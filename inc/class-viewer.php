@@ -369,24 +369,21 @@ class Viewer extends Db {
         list( $sum_rows, $arr_names ) =
               $this->select_by_text( $query, $this->maxrows, $page );
         if( $sum_rows > 0 ) {
-            foreach( $arr_names as list( $k, $arr_name ) ) {
-                $arr_names[$k]['unit'] = $this->get_path_unit($arr_name['unitid']);
-                foreach( $arr_name as list( $key, $name ) )
-                {
-                    if( $key!='id'     and
-                        $key!='jobid'  and
-                        $key!='unitid' and
-                        $key!='nonid'  )
-                    {
-                        // Выделение указанного текста
-                        $slitted_name = utf8_spliti_string( $query, $arr_name[$key] );
-                        if( is_array( $slitted_name )) {
-                            $arr_names[$k][$key] = $slitted_name[0] . $replacement
-                                          . $slitted_name[1];
-                        }
-                    }
+          //var_dump($arr_names);
+          //echo _fname_;
+          foreach($arr_names as $k => $arr_name ) {
+            //var_dump($arr_name); continue;
+              //!!! $arr_names[$k]['unit'] = $this->get_path_unit($arr_name['unitid']);
+            foreach( $arr_name as $key => $name ) {
+              if( $key=='job'  or $key=='name' or $key=='unit' ) {
+                // Выделение указанного текста
+                $slitted_name = utf8_spliti_string( $query, $name );
+                if( is_array( $slitted_name )) {
+                  $arr_names[$k][$key] = $slitted_name[0] . $replacement . $slitted_name[1];
                 }
+              }
             }
+          }
         }
 
         $smarty = $this->render;

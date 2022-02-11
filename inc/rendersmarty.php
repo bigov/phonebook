@@ -9,7 +9,7 @@ trait RenderSmarty {
      *  Инициализация объекта шаблона на базе Smarty
      */
     private function render_init() {
-        require( ABSPATH . 'inc/Smarty/Smarty.class.php' );
+        require( ABSPATH . 'inc/smarty/libs/Smarty.class.php' );
         $this->render = new Smarty;
         $this->render->debugging = false;
 

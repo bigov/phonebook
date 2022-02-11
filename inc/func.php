@@ -20,7 +20,8 @@ function set_constants() {
 
 	global $request;
 	$request = array();
-	foreach ( $_POST as list( $key, $val ) ) {
+//	foreach ( $_POST as list( $key, $val ) ) {
+	foreach ( $_POST as $key => $val ) {
 		$request[ $key ] = $val;
 	}
 	
