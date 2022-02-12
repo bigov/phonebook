@@ -121,10 +121,11 @@ class Units extends Db {
             exit();
     }
 
-  $unit_rec = $this->get_unit( $this->http['unitid'] );
-  $unit_rec['path']  = $this->get_path_unit( $unit_rec['parent'] );
+    $unit_rec = $this->get_unit( $this->http['unitid'] );
 
-  $jobs = $this->get_jobs_array($this->http['unitid']);
+    $unit_rec['path']  = $this->get_path_unit( $unit_rec['parent'] );
+
+    $jobs = $this->get_jobs_array($this->http['unitid']);
 
         $smarty->assign( 'unit_rec', $unit_rec );
         $smarty->assign( 'jobs', $jobs );

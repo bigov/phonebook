@@ -1,7 +1,8 @@
 <?php
 class Db {
 
-    use DbMySQL;
+    //use DbMySQL;
+    use DbSQLite3;
     use RenderSmarty;
 
     protected $separator_unit = ' » '; // Разделитель названий в должности

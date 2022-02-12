@@ -13,10 +13,10 @@ if( !isset( $phones_open )) {
       case 'view':
       	$book = new Viewer();
         break;
-			case 'operator':
+	case 'operator':
         $book = new Control();
         break;
-			case 'job':
+	case 'job':
         $book = new Jobs();
         break;
       case 'units':

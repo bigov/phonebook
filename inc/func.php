@@ -20,13 +20,8 @@ function set_constants() {
 
 	global $request;
 	$request = array();
-//	foreach ( $_POST as list( $key, $val ) ) {
-	foreach ( $_POST as $key => $val ) {
-		$request[ $key ] = $val;
-	}
-	
+	foreach ( $_POST as $key => $val ) $request[ $key ] = $val;
 	$url_string = preg_replace( "~$root_folder~", '', urldecode( $_SERVER["REQUEST_URI"] ));
-
 	$url_string = preg_replace( '~/?[^/]*\?[^/]*~', '', $url_string );
 	$url_params = explode( '/', $url_string );
 	if ( empty( $url_params[0] )) array_shift( $url_params );
@@ -86,7 +81,7 @@ function err() {
 		. '<html lang="ru">' . "\n"
 		. '<head><meta http-equiv="content-type" content="text/html; charset=utf-8" />' . "\n"
 		. '</head><body><pre>' . "\n" );
-	print( 'debug time: ' . time( 'now' ) . "<br />\n");
+	print( 'debug time: ' . date('Y-m-d H:i:s e' ) . "<br />\n");
 	for( $t=0; $t<count($a); $t++ ) {
 		if (is_array($a[$t])) {
 			print_r($a[$t]);

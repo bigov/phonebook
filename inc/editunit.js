@@ -1,11 +1,11 @@
 /**
  * Editing service functions
- *  
+ *
  */
 
 function submit_on() {
    submit_btm = document.getElementById( "submit" );
-   submit_btm.style.visibility="visible"; 				
+   submit_btm.style.visibility="visible";
 }
 
 function edit_rec() {
@@ -16,8 +16,8 @@ function edit_rec() {
 
 function turn_on(el) {
    el.readOnly=false;
-   el.disabled=false; 				
-   el.className ="edit_on"; 				
+   el.disabled=false;
+   el.className ="edit_on";
    el.style.visibility='visible';
 }
 function delete_rec() {
