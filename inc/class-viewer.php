@@ -92,7 +92,7 @@ class Viewer extends Db {
      * Автономная версия справочника
      */
     private function download() {
-        //$smarty->assign('phones', $this->make_full_list());
+      //$smarty->assign('phones', $this->make_full_list());
 
       // получает содержимое файла в строку
       $fdir = ABSPATH . DS. "offline" . DS;
@@ -130,8 +130,13 @@ class Viewer extends Db {
 
       print $contents;
 
-      print ("<ul id=\"acclist\" class=\"accordion\">\n\t<li id=\"current\"><a href=\"#\">ОАО ТГК-14</a>");
-      print $this->make_ul_branch($this->make_full_list(711));
+      print ("<ul id=\"acclist\" class=\"accordion\">\n\t<li id=\"current\"><a href=\"#\">Телефонный справочник</a>");
+
+      // По-умолчанию экспорт выполняется только для базовой ветки справочника
+      print $this->make_ul_branch($this->make_full_list(DEFAULT_PODR));
+      // Если нужен полный список, то используем id корневой записи таблицы units
+      //print $this->make_ul_branch($this->make_full_list(1));
+
       print ("\n\t</li>\n</ul>\n\n");
 
       $filename = $fdir . '3.footer.htm';

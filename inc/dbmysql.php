@@ -400,7 +400,7 @@ trait DbMySQL {
         $sql = "SELECT * FROM `units` WHERE `unitid`=$unitid;";
         $unit = $this->db_query_row($sql);
         if (!$unit) return '';
-        $full_unit = ereg_replace("'", "\"", $unit['unit']);
+        $full_unit = preg_replace("/'/", "\"", $unit['unit']);
 
         if ($unit['parent'] == 0) {
             return $full_unit;
