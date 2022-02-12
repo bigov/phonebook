@@ -92,7 +92,7 @@ class Viewer extends Db {
      * Автономная версия справочника
      */
     private function download() {
-        //$smarty->assign('phones', $this->make_full_list());
+      //$smarty->assign('phones', $this->make_full_list());
 
       // получает содержимое файла в строку
       $fdir = ABSPATH . DS. "offline" . DS;
@@ -130,8 +130,13 @@ class Viewer extends Db {
 
       print $contents;
 
-      print ("<ul id=\"acclist\" class=\"accordion\">\n\t<li id=\"current\"><a href=\"#\">ОАО ТГК-14</a>");
-      print $this->make_ul_branch($this->make_full_list(711));
+      print ("<ul id=\"acclist\" class=\"accordion\">\n\t<li id=\"current\"><a href=\"#\">Телефонный справочник</a>");
+
+      // По-умолчанию экспорт выполняется только для базовой ветки справочника
+      print $this->make_ul_branch($this->make_full_list(DEFAULT_PODR));
+      // Если нужен полный список, то используем id корневой записи таблицы units
+      //print $this->make_ul_branch($this->make_full_list(1));
+
       print ("\n\t</li>\n</ul>\n\n");
 
       $filename = $fdir . '3.footer.htm';
@@ -369,24 +374,21 @@ class Viewer extends Db {
         list( $sum_rows, $arr_names ) =
               $this->select_by_text( $query, $this->maxrows, $page );
         if( $sum_rows > 0 ) {
-            while( list( $k, $arr_name ) = each( $arr_names )) {
-                $arr_names[$k]['unit'] = $this->get_path_unit($arr_name['unitid']);
-                while( list( $key, $name ) = each( $arr_name ))
-                {
-                    if( $key!='id'     and
-                        $key!='jobid'  and
-                        $key!='unitid' and
-                        $key!='nonid'  )
-                    {
-                        // Выделение указанного текста
-                        $slitted_name = utf8_spliti_string( $query, $arr_name[$key] );
-                        if( is_array( $slitted_name )) {
-                            $arr_names[$k][$key] = $slitted_name[0] . $replacement
-                                          . $slitted_name[1];
-                        }
-                    }
+          //var_dump($arr_names);
+          //echo _fname_;
+          foreach($arr_names as $k => $arr_name ) {
+            //var_dump($arr_name); continue;
+              //!!! $arr_names[$k]['unit'] = $this->get_path_unit($arr_name['unitid']);
+            foreach( $arr_name as $key => $name ) {
+              if( $key=='job'  or $key=='name' or $key=='unit' ) {
+                // Выделение указанного текста
+                $slitted_name = utf8_spliti_string( $query, $name );
+                if( is_array( $slitted_name )) {
+                  $arr_names[$k][$key] = $slitted_name[0] . $replacement . $slitted_name[1];
                 }
+              }
             }
+          }
         }
 
         $smarty = $this->render;

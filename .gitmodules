@@ -1,3 +1,6 @@
 [submodule "inc/PHPMailer"]
 	path = inc/PHPMailer
 	url = https://github.com/PHPMailer/PHPMailer.git
+[submodule "inc/smarty"]
+	path = inc/smarty
+	url = https://github.com/smarty-php/smarty.git
