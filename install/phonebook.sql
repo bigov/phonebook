@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Фев 12 2022 г., 00:51
+-- Время создания: Фев 12 2022 г., 17:35
 -- Версия сервера: 5.0.83-community-nt
 -- Версия PHP: 7.3.8
 
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `names` (
   `name` varchar(80) collate utf8_unicode_ci NOT NULL COMMENT 'ФИО',
   `phones` varchar(128) collate utf8_unicode_ci default NULL COMMENT 'телефоны',
   `email` varchar(64) collate utf8_unicode_ci default NULL
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='employers names' AUTO_INCREMENT=2462 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='employers names' AUTO_INCREMENT=2463 ;
 
 --
 -- Дамп данных таблицы `names`
@@ -130,7 +130,8 @@ CREATE TABLE IF NOT EXISTS `names` (
 
 INSERT INTO `names` (`id`, `jobid`, `name`, `phones`, `email`) VALUES
 (2461, 2275, 'Кошкин Кирил Константинович', '+7(914)000-00-00', 'kisq@sample.org'),
-(2460, 2273, 'Иванов Иван Иванович', '22-22-11', '');
+(2460, 2273, 'Иванов Иван Иванович', '22-22-11', ''),
+(2462, 2276, 'Кошкин Семен Петрович', '+7(914)000-00-00', '');
 
 -- --------------------------------------------------------
 
@@ -148,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `names_history` (
   `opid` int(8) unsigned NOT NULL,
   `ip` varchar(32) collate utf8_unicode_ci NOT NULL COMMENT 'IP address',
   `date` datetime NOT NULL
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='modifications in names' AUTO_INCREMENT=4301 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='modifications in names' AUTO_INCREMENT=4302 ;
 
 --
 -- Дамп данных таблицы `names_history`
@@ -158,7 +159,8 @@ INSERT INTO `names_history` (`nhid`, `id`, `jobid`, `name`, `phones`, `email`, `
 (4297, 2459, 2272, 'Петушков Геннадий Петрович', '22-22-22', '', 0, '127.0.0.1', '2022-02-09 20:15:44'),
 (4298, 2460, 2273, 'Иванов Иван Иванович', '22-22-11', '', 0, '127.0.0.1', '2022-02-09 20:33:14'),
 (4299, 2459, 2272, 'Петушков Геннадий Петрович', '22-22-22', '', 0, '127.0.0.1', '2022-02-12 08:59:58'),
-(4300, 2461, 2275, 'Кошкин Кирил Константинович', '+7(914)000-00-00', 'kisq@sample.org', 0, '127.0.0.1', '2022-02-12 09:37:17');
+(4300, 2461, 2275, 'Кошкин Кирил Константинович', '+7(914)000-00-00', 'kisq@sample.org', 0, '127.0.0.1', '2022-02-12 09:37:17'),
+(4301, 2462, 2276, 'Кошкин Семен Петрович', '+7(914)000-00-00', '', 0, '127.0.0.1', '2022-02-12 17:32:22');
 
 -- --------------------------------------------------------
 
@@ -214,8 +216,8 @@ INSERT INTO `units` (`unitid`, `unit`, `parent`, `order`) VALUES
 (1, 'Основной список', 0, 0),
 (3, 'База хранения', 2, 10),
 (2, 'Наша Контора', 1, 10),
-(933, 'отдел закупок', 2, 99),
-(934, 'прочие', 0, 999),
+(933, 'Отдел закупок', 2, 99),
+(934, 'Прочие', 0, 999),
 (935, 'Управляющая дирекция', 1, 1),
 (936, 'Дочернее предприятие', 1, 30);
 
@@ -234,7 +236,7 @@ CREATE TABLE IF NOT EXISTS `units_history` (
   `opid` int(8) unsigned NOT NULL,
   `ip` varchar(32) collate utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='modifications in names' AUTO_INCREMENT=531 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='modifications in names' AUTO_INCREMENT=533 ;
 
 --
 -- Дамп данных таблицы `units_history`
@@ -247,7 +249,9 @@ INSERT INTO `units_history` (`umid`, `unitid`, `unit`, `parent`, `order`, `opid`
 (527, 929, 'Маша и Медведь', 0, 1, 0, '127.0.0.1', '2022-02-12 09:04:15'),
 (528, 931, 'Технический отдел', 929, 99, 0, '127.0.0.1', '2022-02-12 09:06:00'),
 (529, 931, 'Наша контора', 929, 1, 0, '127.0.0.1', '2022-02-12 09:07:26'),
-(530, 2, 'Наша Контора', 1, 1, 0, '127.0.0.1', '2022-02-12 09:46:01');
+(530, 2, 'Наша Контора', 1, 1, 0, '127.0.0.1', '2022-02-12 09:46:01'),
+(531, 934, 'прочие', 0, 999, 0, '127.0.0.1', '2022-02-12 17:29:01'),
+(532, 933, 'отдел закупок', 2, 99, 0, '127.0.0.1', '2022-02-12 17:34:16');
 
 -- --------------------------------------------------------
 
@@ -359,12 +363,12 @@ AUTO_INCREMENT=402;
 -- AUTO_INCREMENT for table `names`
 --
 ALTER TABLE `names`
-AUTO_INCREMENT=2462;
+AUTO_INCREMENT=2463;
 --
 -- AUTO_INCREMENT for table `names_history`
 --
 ALTER TABLE `names_history`
-AUTO_INCREMENT=4301;
+AUTO_INCREMENT=4302;
 --
 -- AUTO_INCREMENT for table `names_mod`
 --
@@ -384,7 +388,7 @@ AUTO_INCREMENT=937;
 -- AUTO_INCREMENT for table `units_history`
 --
 ALTER TABLE `units_history`
-AUTO_INCREMENT=531;
+AUTO_INCREMENT=533;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
