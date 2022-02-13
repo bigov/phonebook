@@ -1,11 +1,12 @@
-<?php
-global $request;
+<?php namespace inc;
+
+//global $request;
 
 /**
  * Установка констант, используемых в работе классов и рендеринга 
  */
-function set_constants() {
-
+function set_constants()
+{
 	/* Настройка констант текущего оператора
 	 */
 	$string = md5( $_SERVER["HTTP_USER_AGENT"] . $_SERVER["HTTP_ACCEPT"]
@@ -17,6 +18,7 @@ function set_constants() {
 	$root_folder = "/" . $_dirs[1] . "/"; // ="/phones/"
 
   define( 'ROOTURL', 'http://' . HOSTNAME . $root_folder );
+
 
 	global $request;
 	$request = array();
@@ -32,7 +34,7 @@ function set_constants() {
 		define( 'FUNC', array_shift( $url_params )); // действие
 	} else {
 		define( 'FUNC', $request['func'] ); // действие
-		$t = array_shift( $url_params );
+		array_shift( $url_params );
 	}
 	
 	while ( $key = array_shift( $url_params )) {
@@ -156,29 +158,6 @@ function utf8_spliti_string( $pattern, $utf_string ) {
 	$substr_b = mb_substr( $utf_string, $str_start + $str_lengh );
 	return array( $substr_a, $substr_b );
 } 
-
-/**
- * Turn register globals off.
- *
- * @return null Will return null if register_globals PHP directive was disabled
- */
-function unregister_GLOBALS() {
-	if ( !ini_get( 'register_globals' ) )
-		return;
-
-	if ( isset( $_REQUEST['GLOBALS'] ) )
-		die( 'GLOBALS overwrite attempt detected' );
-
-	// Variables that shouldn't be unset
-	$no_unset = array( 'GLOBALS', '_GET', '_POST', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES', 'table_prefix' );
-
-	$input = array_merge( $_GET, $_POST, $_COOKIE, $_SERVER, $_ENV, $_FILES, isset( $_SESSION ) && is_array( $_SESSION ) ? $_SESSION : array() );
-	foreach ( $input as $k => $v )
-		if ( !in_array( $k, $no_unset ) && isset( $GLOBALS[$k] ) ) {
-		$GLOBALS[$k] = null;
-		unset( $GLOBALS[$k] );
-	}
-}
 
 /**
  * Создает массив ассоциативных массивов из результатов запроса

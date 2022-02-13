@@ -1,7 +1,7 @@
-<?php
+<?php namespace inc;
 
 // режим редактирования данных должностей
-class Jobs extends Db {
+class jobs extends database {
     
     public function show() {
 

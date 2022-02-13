@@ -1,6 +1,6 @@
-<?php
+<?php namespace inc;
 
-class Control extends Db {
+class control extends database {
 
     public function show() {
 

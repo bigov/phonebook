@@ -1,8 +1,9 @@
-<?php
+<?php namespace inc;
+
 /**
  * Выборка данных из базы и предоставление информации
  */
-class Viewer extends Db {
+class viewer extends Database {
 
    /**
     * выбор функции отображения
@@ -158,8 +159,9 @@ class Viewer extends Db {
       $this->tabs_inc();
       $row = "";
       $this->tabs_inc();
-      foreach ($branch as $i => $val) {
-        $row = $row . $this->indent() . "<li><a href=\"#i\">" . $val['unit']. "</a>";
+      //foreach ($branch as $i => $val) {
+      foreach ($branch as $val) {
+              $row = $row . $this->indent() . "<li><a href=\"#i\">" . $val['unit']. "</a>";
           if (isset($val['jobs'])) {
           $row = $row . $this->make_ul_jobs($val['jobs']);
         }
@@ -188,7 +190,7 @@ class Viewer extends Db {
       $row = "";
       $this->tabs_inc();
       $color = 'first';
-      foreach ($jobs as $i => $job) {
+      foreach ($jobs as $job) {
 
         if (empty($job['name'])) $job['name'] = 'данные отсутствуют';
         $dd = '<strong>'.$job['name'].'</strong><br> ';
@@ -429,7 +431,7 @@ class Viewer extends Db {
     public function view_duty() {
         $content = $this->get_dutyes();
         $duty = array();
-        foreach ( $content as $key=>$rec ) {
+        foreach ( $content as $rec ) {
             $row = "$rec[unit] | $rec[job] | $rec[kab] $rec[phone], $rec[fax]";
             $duty[] = $row;
         }

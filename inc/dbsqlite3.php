@@ -1,24 +1,35 @@
-<?php
+<?php namespace inc;
 
 /*
  * Трейт c для работы с базой данных MySQL
  *
  */
 
-trait DbSQLite3 {
+trait dbsqlite3 {
 
   private $db = NULL;
-  private $num_rows = 0;
+  private $last_rows = 0;
   private $last_id = 0;
 
   /**
    * Закрытие подключения к базе данных
    * @return boolean
    */
-  private function db_close() {
-    if(!is_null($this->db)) $this->db->close();
-    $this->db = NULL;
-    return TRUE;
+  private function db_close()
+  {
+      if(!is_null($this->db))
+      {
+          if(!$this->db->close()) 
+          {
+              err("Не удалось закрыть БД");
+              return FALSE;
+          }else{
+              $this->db = NULL;
+              return TRUE;
+          }
+      }
+      err("Попытка закрыть БД без указателя");
+      return FALSE;
   }
 
   private function show_error($sql)
@@ -40,13 +51,12 @@ trait DbSQLite3 {
   {
     if (!is_null($this->db)) return;
 
-    require( INC_DIR . 'conf.php' );
-    if(!file_exists($dbname))
+    if(!file_exists(\DBNAME))
     {
-       err("Database file \"$dbname\" not found");
+       err("Database file \"". \DBNAME . "\" not found");
        exit;
     }
-    $this->db = new SQLite3($dbname);
+    $this->db = new \SQLite3(\DBNAME, SQLITE3_OPEN_READWRITE);
     return;
   }
 
@@ -72,52 +82,56 @@ trait DbSQLite3 {
   {
     if (is_null($this->db)) $this->link();
     if (!$result = $this->db->query($query)) $this->show_error($query);
-    return $this->num_rows($result);
+    return $this->last_rows($result);
   }
 
-    /**
-     * Выполнение запроса к базе данных на выборку массива
-     *
-     * @param string $sql Строка MySQL запроса
-     */
-  protected function db_query($sql)
-  {
-     if(is_null($this->db)) $this->link();
-     $data = NULL;
-     $db = $this->db;
-
-     if ($result = $db->query($sql))
-     {
-       if (is_object($result))
-       {
-         $data = array();
-         while ($row = $result->fetchArray()) $data[] = $row;
-       } else {
-         return $result;
-       }
-     } else
-     {
-       $this->show_error($sql);
-     }
-     return $data;
-    }
 
   /**
-   * Выполнение запроса к базе данных на выборку/вставку одной строки
+   * Выполняет запрос без результата к текущей базе данных
    *
    * @param string $sql Строка MySQL запроса
    */
-  protected function db_query_row($sql)
+  protected function exec_sqlite($sql)
   {
-    $this->last_id = 0;
-
-    if(is_null($this->db)) $this->link();
-    if (!$result = $this->db->query($sql)) $this->show_error($sql);
-    $this->last_id = $this->db->lastInsertRowID();
-    if ($this->num_rows($result) > 1) err("Ошибка: более 1 записи из \"$sql\"");
-    return $result->fetchArray();
+      if(is_null($this->db)) $this->link();
+      if(!$this->db->exec($sql)) $this->show_error($sql);
+      return TRUE;
   }
 
+  /**
+   * Выполняет запрос без результата к текущей базе данных
+   *
+   * @param string $sql Строка MySQL запроса
+   */
+  protected function insert_sqlite($sql)
+  {
+      if(is_null($this->db)) $this->link();
+      if(!$this->db->exec($sql)) $this->show_error($sql);
+      $this->last_id = $this->db->lastInsertRowID();
+      return $this->last_id;
+  }
+
+   /**
+    * Выполнение запроса к базе данных на выборку массива
+    *
+    * @param string $sql Строка MySQL запроса
+    */
+  protected function query_sqlite($sql)
+  {
+     if(is_null($this->db)) $this->link();
+     $data = array();
+
+     if ($result = $this->db->query($sql))
+     {
+         while ($row = $result->fetchArray(SQLITE3_ASSOC)) $data[] = $row;
+     }
+     else
+     {
+         $this->show_error($sql);
+     }
+     $this->last_rows = count($data);
+     return $data;
+  }
 
     /**
      * Проверка состава параметров запроса. Защита от выполения запросов с
@@ -133,7 +147,7 @@ trait DbSQLite3 {
         if (count($params) < count($need)) {
             err("ERR: expect " . count($need) . " parameters.");
         }
-        foreach ($need as $i => $key) {
+        foreach ($need as $key) {
             if (!array_key_exists($key, $params)) {
                 err("ERR: expect parameter name \"$key\".");;
             }
@@ -161,7 +175,7 @@ trait DbSQLite3 {
                 . "`phones`='%s', `email`='%s' WHERE `id`=%d LIMIT 1;",
             $q['jobid'], $q['name'], $q['phones'], $q['email'], $q['id'] );
 
-        $res = $this->db_query($sql);
+        $this->db_query($sql);
         return true;
     }
 
@@ -171,14 +185,14 @@ trait DbSQLite3 {
      * @param array $q Ассоциативный массив параметров
      * @return integer
      */
-    protected function name_add( $q ) {
-        $this->check_params($q,
-                array('jobid', 'name', 'phones', 'email'));
-        $query = sprintf("INSERT `names` ( `jobid`, `name`, `phones`, `email` ) "
-                . "VALUES ( %d, '%s', '%s', '%s' )"
-                , $q['jobid'], $q['name'], $q['phones'], $q['email'] );
-
-        $this->db_query_row($query);
+    protected function name_add( $q )
+    {
+      $this->check_params($q, array('jobid', 'name', 'phones', 'email'));
+      $query = sprintf("INSERT INTO `names` "
+          ."( `jobid`, `name`, `phones`, `email` ) "
+          . "VALUES ( %d, '%s', '%s', '%s' )",
+          $q['jobid'], $q['name'], $q['phones'], $q['email'] );
+      $this->insert_sqlite($query);
     }
 
     /**
@@ -191,11 +205,11 @@ trait DbSQLite3 {
 
         $sql = sprintf("INSERT `names_mod` ( `id`,`new_jobid`,`new_name`,"
             . "`new_phones`,`new_email`,`mod`,`opid`,`date` ) VALUES "
-            . "(%d, %d, '%s', '%s', '%s','edit',%d,NOW())",
+            . "(%d, %d, '%s', '%s', '%s', 'edit', %d, date('now'))",
             $q['id'], $q['jobid'], $q['name'], $q['phones'], $q['email'],
             $q['opid']);
 
-        $this->db_query_row($sql);
+        $this->insert_sqlite($sql);
         return true;
     }
 
@@ -280,20 +294,21 @@ trait DbSQLite3 {
     /**
      * Резервное сохранение данных сотрудника перед внесением изменений
      */
-    protected function job_backup( $q ) {
+    protected function job_backup( $q )
+    {
         $this->check_params($q, array('opid', 'opip', 'jobid'));
         $sql = sprintf("INSERT `jobs_history` ( `jobid`, `unitid`, `kab`, `job`, `phone`, "
             . " `fax`, `order`, `anonid`, `opid`, `ip`, `date` ) SELECT `jobid`, "
             . "`unitid`, `kab`, `job`, `phone`, `fax`, `order`, `anonid`, %d, '%s', NOW() "
             . "FROM `jobs` WHERE `jobid`=%d", $q['opid'], $q['opip'], $q['jobid']);
-        $this->db_query_row($sql);
-        return;
+        return $this->insert_sqlite($sql);
     }
 
     /**
      * Перевод сотрудника на другую должность
      */
-    protected function name_move( $q ) {
+    protected function name_move( $q )
+    {
         $this->check_params($q, array('id','jobid'));
         $sql = sprintf("UPDATE `names` SET `jobid`=%d WHERE `id`=%d LIMIT 1;",
                 $q['jobid'], $q['id']);
@@ -305,30 +320,32 @@ trait DbSQLite3 {
      *  Резервное сохранение данных сотрудника перед внесением изменений
      *  ip=OPERATOR_IP, id=http[id], opip=http[opid]
      */
-    protected function name_backup( $q ) {
+    protected function name_backup( $q )
+    {
         $this->check_params($q, array('id', 'ip', 'opid'));
 
-        $sql = sprintf("INSERT `names_history` (`id`,`jobid`,`name`,`phones`,"
+        $sql = sprintf("INSERT INTO `names_history` (`id`,`jobid`,`name`,`phones`,"
             . "`email`,`opid`, `ip`, `date` ) SELECT `id`,`jobid`,`name`,"
-            . "`phones`,`email`, %d, '%s', NOW() FROM `names` WHERE `id`=%d"
+            . "`phones`,`email`, %d, '%s', date('now') FROM `names` WHERE `id`=%d"
             , $q['opid'], $q['ip'], $q['id']);
-        $this->db_query_row($sql);
-        return;
+        return $this->insert_sqlite($sql);
     }
 
     /**
      * Вставка должности
      */
-    protected function job_insert( $q ) {
+    protected function job_insert( $q )
+    {
         $this->check_params($q,
-            array('unitid', 'kab','job','phone', 'fax','order','anonid'));
+            array('unitid','kab','job','phone','fax','order','anonid'));
 
-        $sql = sprintf("INSERT `jobs` SET `unitid`=%d,`kab`='%s',`job`='%s',"
-                ."`phone`='%s',`fax`='%s',`order`=%d,`anonid`=%d",
-                $q['unitid'], $q['kab'], $q['job'],
-                $q['phone'], $q['fax'], $q['order'], $q['anonid']);
-        $this->db_query_row($sql);
-        return true;
+        $sql = sprintf("INSERT INTO `jobs`"
+            ."(`unitid`,`kab`,`job`,`phone`,`fax`,`order`,`anonid`)"
+            ." VALUES (%d, '%s', '%s', '%s', '%s', %d, %d)",
+            $q['unitid'], $q['kab'], $q['job'], $q['phone'],
+            $q['fax'], $q['order'], $q['anonid']);
+
+        return $this->insert_sqlite($sql);
     }
 
     /**
@@ -348,9 +365,9 @@ trait DbSQLite3 {
      */
     protected function get_unit( $unitid ) {
         $sql = "SELECT * FROM `units` WHERE `unitid`=$unitid;";
-        $unit = $this->db_query_row($sql);
-        $unit['unit'] = preg_replace("/'/", "\"", $unit['unit']);
-        return $unit;
+        $unit = $this->query_sqlite($sql);
+        $unit[0]['unit'] = preg_replace("/'/", "\"", $unit[0]['unit']);
+        return $unit[0];
     }
 
     /**
@@ -358,22 +375,24 @@ trait DbSQLite3 {
      * включая имя подразделения/блока/группы без URL
      *
      */
-    protected function get_txtpath_unit( $unitid ) {
-
+    protected function get_txtpath_unit( $unitid )
+    {
       if (empty($unitid)) return FALSE;
-
-        $sql = "SELECT * FROM `units` WHERE `unitid`=$unitid;";
-        $unit = $this->db_query_row($sql);
-        if (!$unit) return '';
-        $full_unit = preg_replace("/'/", "\"", $unit['unit']);
-
-        if ($unit['parent'] == 0) {
-            return $full_unit;
-        } else {
-            $full_unit = $this->get_txtpath_unit($unit['parent'])
-                    . $this->separator_unit . $full_unit;
-            return $full_unit;
-        }
+      $sql = "SELECT * FROM `units` WHERE `unitid`=$unitid;";
+      $r = $this->query_sqlite($sql);
+      if (!$r) return '';
+      $unit = $r[0];
+      $full_unit = preg_replace("/'/", "\"", $unit['unit']);
+      if ($unit['parent'] == 0)
+      {
+        return $full_unit;
+      }
+      else
+      {
+        $full_unit = $this->get_txtpath_unit($unit['parent'])
+                   . $this->separator_unit . $full_unit;
+         return $full_unit;
+      }
     }
 
     /**
@@ -383,25 +402,27 @@ trait DbSQLite3 {
      * автоматически добавляются URL-ссылки. Если необходим список без ссылок,
      * то надо использовать функцию "get_txtpath_unit()"
      */
-    protected function get_path_unit( $unitid ) {
-
+    protected function get_path_unit( $unitid )
+    {
       if (empty($unitid)) return FALSE;
+      $sql = "SELECT * FROM `units` WHERE `unitid`=$unitid;";
+      $res = $this->query_sqlite($sql);
+      if (!$res) return '';
+      $unit = $res[0];
+      $full_unit = preg_replace("/'/", "\"", $unit['unit']);
+      $full_unit = '<a class="unit" href="' . ROOTURL . 'view/units/unitid/'
+          . $unitid . '">' . $full_unit . '</a>';
 
-        $sql = "SELECT * FROM `units` WHERE `unitid`=$unitid;";
-        $unit = $this->db_query_row($sql);
-        if (!$unit) return '';
-        $full_unit = preg_replace("/'/", "\"", $unit['unit']);
-
-        $full_unit = '<a class="unit" href="' . ROOTURL . 'view/units/unitid/' . $unitid
-          . '">' . $full_unit . '</a>';
-
-        if ($unit['parent'] == 0) {
-            return $full_unit;
-        } else {
-            $full_unit = $this->get_path_unit($unit['parent'])
-                    . $this->separator_unit . $full_unit;
-            return $full_unit;
-        }
+      if ($unit['parent'] == 0)
+      {
+        return $full_unit;
+      }
+      else
+      {
+        $full_unit = $this->get_path_unit($unit['parent'])
+                   . $this->separator_unit . $full_unit;
+        return $full_unit;
+      }
     }
 
     /**
@@ -410,10 +431,10 @@ trait DbSQLite3 {
     protected function get_vacancys() {
         $sql = "SELECT `jobid`,`unitid`,`job` FROM `jobs` WHERE `jobid` "
             ."NOT IN (SELECT `jobid` FROM `names`) AND `anonid`='0'";
-        $rows_arr = $this->db_query($sql);
+        $rows_arr = $this->query_sqlite($sql);
 
         $vacancys = array();
-        foreach ($rows_arr as $id => $row) {
+        foreach ($rows_arr as $row) {
             $vacancys[$row['jobid']] = $this->get_txtpath_unit($row['unitid'])
                     . ' | ' . $row['job'];
         }
@@ -444,7 +465,7 @@ trait DbSQLite3 {
         $dst_arr = array();
       $branch = $this->get_branch_array($id, $order);
         if (is_array($branch)) {
-      foreach ($branch as $key => $unit) {
+      foreach ($branch as $unit) {
         $dst_arr[$unit['unitid']] = $unit;
           }
         }
@@ -460,7 +481,7 @@ trait DbSQLite3 {
         if (empty($id)) { $id = 0; }
         $sql = "SELECT * FROM `units` WHERE `units`.`parent`=$id "
              . "ORDER BY `units`.`$order`;";
-        $rows = $this->db_query($sql);
+        $rows = $this->query_sqlite($sql);
         return $rows;
     }
 
@@ -487,7 +508,7 @@ trait DbSQLite3 {
     protected function get_names_mod($nmid = '') {
         $sql = 'SELECT * FROM `names_mod`';
         if (empty($nmid)) {
-          return $this->db_query($sql);
+          return $this->query_sqlite($sql);
         } else {
           $sql = $sql . ' WHERE `names_mod`.`nmid`="' . $nmid . '";';
           return $this->db_query_row($sql);
@@ -500,7 +521,7 @@ trait DbSQLite3 {
     protected function get_jobs_mod($jmid = '') {
         $sql = 'SELECT * FROM `jobs_mod`';
       if (empty($jmid)) {
-          return $this->db_query($sql);
+          return $this->query_sqlite($sql);
         } else {
           $sql = $sql . ' WHERE `jobs_mod`.`jmid`="' . $jmid . '"';
           return $this->db_query_row($sql);
@@ -510,27 +531,27 @@ trait DbSQLite3 {
     /**
      * Cоздание подразделения
      */
-    protected function unit_insert( $q ) {
+    protected function unit_insert( $q )
+    {
         $this->check_params($q, array('unit', 'parent', 'order'));
-
         $sql = sprintf("INSERT INTO \"units\"" .
              "(\"unit\", \"parent\", \"order\")" .
              "VALUES ('%s', '%d', '%d');",
              $q['unit'], $q['parent'], $q['order']);
-        $this->db_query_row($sql);
-        return $this->last_id;
+        return $this->insert_sqlite($sql);
     }
 
     /**
      * Обновление данных в таблице подразделений
      */
-    protected function unit_update( $q ) {
-        $this->check_params($q, array('unit','parent','order','unitid'));
-        $sql = sprintf("UPDATE `units` SET `unit`='%s', `parent`=%d, "
-                . "`order`=%d WHERE `unitid`=%d LIMIT 1;"
-                , $q['unit'], $q['parent'], $q['order'], $q['unitid']);
-        $this->db_query_row($sql);
-        return true;
+    protected function unit_update( $q )
+    {
+      $this->check_params($q, array('unit','parent','order','unitid'));
+      $sql = sprintf("UPDATE `units` SET `unit`='%s', `parent`=%d, "
+          . "`order`=%d WHERE `unitid`=%d LIMIT 1;"
+          , $q['unit'], $q['parent'], $q['order'], $q['unitid']);
+      $this->db_query_row($sql);
+      return true;
     }
 
     /**
@@ -539,13 +560,13 @@ trait DbSQLite3 {
     protected function unit_backup( $q ) {
         $this->check_params($q, array('opid', 'opip', 'unitid'));
 
-        $sql = sprintf("INSERT `units_history` ( `unitid`, `unit`, `parent`, `order`,"
-            . " `opid`, `ip`, `date` ) "
-            . " SELECT `unitid`, `unit`, `parent`, `order`, %d, '%s', NOW() "
-            . "FROM `units` WHERE `unitid`=%d", $q['opid'], $q['opip'], $q['unitid']);
+        $sql = sprintf("INSERT INTO \"units_history\""
+            ."( \"unitid\", \"unit\", \"parent\", \"order\", \"opid\", \"ip\", \"date\")"
+            ." SELECT \"unitid\", \"unit\", \"parent\", \"order\", %d, '%s', NOW()"
+            ."FROM \"units\" WHERE \"unitid\"=%d"
+            , $q['opid'], $q['opip'], $q['unitid']);
 
-        $this->db_query_row($sql);
-        return true;
+        return $this->insert_sqlite($sql);
     }
 
     /**
@@ -554,11 +575,11 @@ trait DbSQLite3 {
     protected function unit_isempty($unitid) {
         $sql = "SELECT `jobid` FROM `jobs` WHERE `unitid`=$unitid;";
         $this->db_query_row($sql);
-        if ($this->num_rows > 0) return false;
+        if ($this->last_rows > 0) return false;
 
         $sql = "SELECT `unitid` FROM `units` WHERE `parent`=$unitid;";
         $this->db_query_row($sql);
-        if ($this->num_rows > 0) return false;
+        if ($this->last_rows > 0) return false;
 
         return true;
     }
@@ -622,10 +643,10 @@ trait DbSQLite3 {
      */
     protected function select_jobs_id() {
         $sql = "SELECT `jobid` FROM `jobs` WHERE 1";
-        $jobs_arr = $this->db_query($sql);
+        $jobs_arr = $this->query_sqlite($sql);
 
         $jobs_id = array();
-        foreach ($jobs_arr as $key=>$row) {
+        foreach ($jobs_arr as $row) {
             $jobs_id[] = $row['jobid'];
         }
         unset($jobs_arr);
@@ -635,10 +656,12 @@ trait DbSQLite3 {
     /**
      *  Все данные по должности
      */
-    protected function get_job($jobid) {
-        if (empty($jobid)) {return null;}
+    protected function get_job($jobid)
+    {
+        if (empty($jobid)) return null;
         $sql = "SELECT * FROM `jobs` WHERE `jobid`=$jobid LIMIT 1";
-        $job = $this->db_query_row($sql);
+        $r = $this->query_sqlite($sql);
+        $job = $r[0];
         $job['path'] = $this->get_path_unit($job['unitid']);
         return $job;
     }
@@ -649,8 +672,9 @@ trait DbSQLite3 {
     protected function get_parent($id = '') {
         if (empty($id)){ $id = 0;}
         $sql = 'SELECT `parent` from `units` WHERE `unitid`=' . $id . ';';
-        $unit = $this->db_query_row($sql);
-        return $unit['parent'];
+        $unit = $this->query_sqlite($sql);
+        if(count($unit) > 1) err("Ошибка получения ID родительского unit.");
+        return $unit[0]['parent'];
     }
 
     /**
@@ -662,7 +686,7 @@ trait DbSQLite3 {
                 . 'LEFT JOIN `names` ON `names`.`jobid` = `jobs`.`jobid` '
                 . 'WHERE `jobs`.`unitid` = "' . $unitid
                 . '" ORDER BY `jobs`.`order`;';
-        return $this->db_query($sql);
+        return $this->query_sqlite($sql);
     }
 
     /**
@@ -670,7 +694,7 @@ trait DbSQLite3 {
      */
     protected function exist_name_mod($id) {
         $sql = "SELECT COUNT(*) as n FROM `names_mod` WHERE `id`='$id';";
-        $row = $this->db_query_row($sql);
+        $row = $this->query_sqlite($sql);
         $num = (int) $row['n'];
         if ($num > 0) {
             return true;
@@ -683,7 +707,7 @@ trait DbSQLite3 {
      */
     protected function exist_job_mod($jobid) {
         $sql = "SELECT COUNT(*) as n FROM `jobs_mod` WHERE `jobid`='$jobid';";
-        $row = $this->db_query_row($sql);
+        $row = $this->query_sqlite($sql);
       $num = (int) $row['n'];
         if ($num > 0) {
             return true;
@@ -710,7 +734,7 @@ trait DbSQLite3 {
 
         $from = $page_num * $maxnames;
 
-        $sql = "SELECT SQL_CALC_FOUND_ROWS `names`.*, `units`.`unit`,
+        $sql = "SELECT `names`.*, `units`.`unit`,
        `jobs`.`unitid`, `jobs`.`kab`, `jobs`.`job`, `jobs`.`phone`, `jobs`.`fax`
         FROM `names`
         LEFT JOIN `jobs` ON `names`.`jobid`=`jobs`.`jobid`
@@ -719,7 +743,7 @@ trait DbSQLite3 {
         reset($letters);
         $word = "
             WHERE (";
-        foreach ($letters as $key => $value) {
+        foreach ($letters as $value) {
             $sql .= $word . '`names`.`name` LIKE "' . $value . '%"';
             $word = ' OR ';
         }
@@ -730,15 +754,16 @@ trait DbSQLite3 {
                            OR LENGTH(`jobs`.`fax`) > 4
                            OR LENGTH(`names`.`phones`) > 4 )";
 
-        $query = $sql . " ORDER BY `names`.`name` ASC "
-                . " LIMIT {$from}, {$maxnames} ";
+        $query = $sql." ORDER BY `names`.`name` ASC LIMIT {$from},{$maxnames}";
 
-        // для постраничного вывода - общее количество строк, удовлетворяющих условию запроса
-        $num_rows = $this->db_num_rows($sql);
+        // для постраничного вывода необходимо общее количество строк,
+        // удовлетворяющих условию запроса
+        $last_rows = count( $this->query_sqlite($sql));
+
         // страница данных
-        $names_array = $this->db_query($query);
+        $names_array = $this->query_sqlite($query);
 
-        return array($num_rows, $names_array);
+        return array($last_rows, $names_array);
     }
 
     /**
@@ -747,69 +772,67 @@ trait DbSQLite3 {
      * Возвращается массив ассоциативных массивов с индексами
      * соответствующими именам полей таблицы
      */
-    protected function select_by_text($text='', $maxrows=1, $page=0) {
+  protected function select_by_text($text='', $maxrows=1, $page=0)
+  {
+      if (empty($text)) return array(0, null);
+      $select_from = $page * $maxrows;
+      $text = strip_all($text);
+      $text = str_replace(' ', '%', $text);
 
-        if (empty($text)) {
-            return array(0, null);
-        }
-        $select_from = $page * $maxrows;
-        $text = strip_all($text);
-        $text = str_replace(' ', '%', $text);
-
-
-        // Преобразование номера телефона в регулярное выражение вида
-        // ".3.8.4.5.9.0."
-        $digits = preg_replace('/[^0-9]/', '', $text);
-        $strlen_di = strlen($digits);
-        $phone_reg = ".*";
-        while($strlen_di > 0)
-        {
+      // Преобразование номера телефона в регулярное выражение вида
+      // ".3.8.4.5.9.0."
+      $digits = preg_replace('/[^0-9]/', '', $text);
+      $strlen_di = strlen($digits);
+      $phone_reg = ".*";
+      while($strlen_di > 0)
+      {
           $phone_reg = ".?" . $digits[$strlen_di - 1] . $phone_reg;
           --$strlen_di;
-        }
-        $phone_reg = '.*' . $phone_reg;
-        $search_phone = "";
-        if(strlen($phone_reg) > 12)
-          $search_phone = "OR `jobs`.`phone` REGEXP '" . $phone_reg . "'";
+      }
+      $phone_reg = '.*' . $phone_reg;
+      $search_phone = "";
+      if(strlen($phone_reg) > 12) $search_phone = 
+          "OR `jobs`.`phone` REGEXP '" . $phone_reg . "'";
 
-        $sql = "SELECT SQL_CALC_FOUND_ROWS `jobs`.*, `names`.`id`,
-                `names`.`name`, `names`.`phones`, `names`.`email`,
-                `units`.`unit` FROM `jobs`
-                LEFT JOIN `names` ON `names`.`jobid`=`jobs`.`jobid`
-                LEFT JOIN `units` ON `jobs`.`unitid`=`units`.`unitid`
-                WHERE `names`.`name` LIKE '%{$text}%'
-                    OR `names`.`phones` LIKE '%{$text}%'
-                    OR `names`.`email` LIKE '%{$text}%'
-                    OR `jobs`.`kab` LIKE '%{$text}%'
-                    OR `jobs`.`job` LIKE '%{$text}%'
-                    " . $search_phone . "
-                    OR `jobs`.`fax` LIKE '%{$text}%'
-                    OR `units`.`unit` LIKE '%{$text}%'";
-                    //OR `jobs`.`phone` LIKE '%{$text}%'
-        $query = $sql . " ORDER by `units`.`unitid` DESC LIMIT {$select_from}, {$maxrows} ";
+      $sql = "SELECT `jobs`.*, `names`.`id`,
+             `names`.`name`, `names`.`phones`, `names`.`email`,
+             `units`.`unit` FROM `jobs`
+              LEFT JOIN `names` ON `names`.`jobid`=`jobs`.`jobid`
+              LEFT JOIN `units` ON `jobs`.`unitid`=`units`.`unitid`
+              WHERE `names`.`name` LIKE '%{$text}%'
+              OR `names`.`phones` LIKE '%{$text}%'
+              OR `names`.`email` LIKE '%{$text}%'
+              OR `jobs`.`kab` LIKE '%{$text}%'
+              OR `jobs`.`job` LIKE '%{$text}%'"
+            . $search_phone 
+            . " OR `jobs`.`fax` LIKE '%{$text}%'
+                OR `units`.`unit` LIKE '%{$text}%'";
+              //OR `jobs`.`phone` LIKE '%{$text}%'
+      $query = $sql
+          ." ORDER by `units`.`unitid` DESC LIMIT {$select_from},{$maxrows} ";
 
-        // для постраничного вывода - общее количество строк, удовлетворяющих условию запроса
-        //$num_rows = $this->db_num_rows(sql);
-        //return array($num_rows, $names_array);
-        $arr = $this->db_query($query);
-        return array($this->num_rows, $arr);
-    }
+      // для постраничного вывода необходимо общее количество
+      // строк, удовлетворяющих условию запроса
+      $last_rows = count($this->query_sqlite($sql));
+      $arr = $this->query_sqlite($query);
+      return array($last_rows, $arr);
+  }
 
     /**
      * Выборка по id должности полной информации о сотруднике
      * Возвращается ассоциативный массив данных
      */
-    protected function get_empty($jobid = '') {
-
+    protected function get_empty($jobid = '')
+    {
         if (empty($jobid)) return FALSE;
-
         $sql = "SELECT `jobs`.*, `names`.`id`, `names`.`name`,
             `names`.`phones`, `names`.`email`, `units`.`unit`, `anons`.`anon`
             FROM `jobs` LEFT JOIN `names` ON `names`.`jobid`=`jobs`.`jobid`
             LEFT JOIN `units` ON `units`.`unitid`=`jobs`.`unitid`
             LEFT JOIN `anons` ON `anons`.`anonid`=`jobs`.`anonid`
             WHERE `jobs`.`jobid`=" . $jobid;
-        $employer = $this->db_query_row($sql);
+        $r = $this->query_sqlite($sql);
+        $employer = $r[0];
         $path_unit = $this->get_path_unit($employer['unitid']);
         $employer['path'] = $path_unit;
         return $employer;
@@ -819,8 +842,8 @@ trait DbSQLite3 {
      * Выборка из базы данных полной информации о сотруднике
      * Возвращается ассоциативный массив данных
      */
-    protected function get_employer($id = '') {
-
+    protected function get_employer($id = '')
+    {
         if (empty($id)) {
             err('Error in function get_employer - will not set ID');
         }
@@ -831,8 +854,8 @@ trait DbSQLite3 {
             LEFT JOIN `units` ON `units`.`unitid`=`jobs`.`unitid`
             LEFT JOIN `anons` ON `anons`.`anonid`=`jobs`.`anonid`
             WHERE `names`.`id`=" . $id;
-        $row = $this->db_query($sql);
-        $employer = $row[0];
+        $r = $this->query_sqlite($sql);
+        $employer = $r[0];
         $employer['path'] = $this->get_path_unit($employer['unitid']);
         return $employer;
     }
@@ -843,7 +866,7 @@ trait DbSQLite3 {
     protected function delete_names_mods($id) {
         if(empty($id)){return;}
         $sql = "DELETE FROM `names_mod` WHERE `id`=$id;";
-        $res = $this->db_query($sql);
+        $this->db_query($sql);
         return;
     }
 
@@ -852,10 +875,10 @@ trait DbSQLite3 {
      */
     protected function delete_jobs_mods($jobid) {
         $sql = "DELETE FROM `names_mod` WHERE `new_jobid`=$jobid;";
-        $res = $this->db_query($sql);
+        $this->db_query($sql);
 
         $sql = "DELETE FROM `jobs_mod` WHERE `jobid`=$jobid;";
-        $res = $this->db_query($sql);
+        $this->db_query($sql);
         return;
     }
     /**
@@ -869,7 +892,7 @@ trait DbSQLite3 {
         $level = (int)$operator['level'];
         if ( $level < MAX_LEVEL ) {
             $sql = "UPDATE `operators` SET `level`=(`level`+1) WHERE `opid`='$opid'";
-            $result = $this->db_query( $sql );
+            $this->db_query( $sql );
         }
     }
 
@@ -878,7 +901,7 @@ trait DbSQLite3 {
      */
     protected function operator_dn( $opid ) {
         $sql = "UPDATE `operators` SET `level`=(`level`+1) WHERE `opid`='$opid'";
-        $result = $this->db_query( $sql );
+        $this->db_query( $sql );
     }
 
     /**
@@ -933,7 +956,7 @@ trait DbSQLite3 {
         $sql = 'SELECT * FROM `operators` WHERE `mpd`="' . OPERATOR_MPD . '"';
         $this->operator = $this->db_query_row( $sql );
 
-        if ( $this->num_rows < 1 ) {
+        if ( $this->last_rows < 1 ) {
             $this->new_operator();
             $this->operator = $this->db_query_row( $sql );
         }
@@ -947,35 +970,35 @@ trait DbSQLite3 {
     }
     protected function jobs_history_clear() {
         $sql = "DELETE FROM `jobs_history` WHERE `date` < date( 'now','-30 day')";
-        $this->db_query( $sql );
+        $this->exec_sqlite($sql);
         return;
     }
 
     protected function names_history_clear() {
         $sql = "DELETE FROM `names_history` WHERE `date` < date( 'now','-30 day')";
-        $this->db_query( $sql );
+        $this->exec_sqlite( $sql );
         return;
     }
 
     protected function jobs_mod_clear() {
         $sql = "DELETE FROM `jobs_mod` WHERE `date` < date( 'now','-30 day')";
-        $this->db_query( $sql );
+        $this->exec_sqlite( $sql );
         return;
     }
 
     protected function names_mod_clear() {
         $sql = "DELETE FROM `names_mod` WHERE `date` < date( 'now','-30 day')";
-        $this->db_query( $sql );
+        $this->exec_sqlite( $sql );
         return;
     }
 
     protected function operators_clear() {
         $sql = "DELETE FROM `operators` WHERE `level`=\"0\" "
         . "AND `visit` < date( 'now','-30 day')";
-        $this->db_query( $sql );
+        $this->exec_sqlite( $sql );
 
         $sql = "DELETE FROM `operators` WHERE `visit` < date( 'now','-90 day')";
-        $this->db_query( $sql );
+        $this->exec_sqlite( $sql );
         return;
     }
 }

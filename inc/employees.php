@@ -1,9 +1,9 @@
-<?php
+<?php namespace inc;
 
 /**
  *   редактирование сотрудников
  */
-class Emps extends Db {
+class employees extends database {
     
     public function show() {
         switch ( FUNC ) {

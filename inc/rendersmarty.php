@@ -1,16 +1,17 @@
-<?php
+<?php namespace inc;
+
 /* 
  * Включаемый блок кода для работы со Smarty
  */
 
-trait RenderSmarty {
+trait rendersmarty {
 
     /**
      *  Инициализация объекта шаблона на базе Smarty
      */
     private function render_init() {
         require( ABSPATH . 'inc/smarty/libs/Smarty.class.php' );
-        $this->render = new Smarty;
+        $this->render = new \Smarty;
         $this->render->debugging = false;
 
         //    $smarty->caching = true;

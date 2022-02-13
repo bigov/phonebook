@@ -1,9 +1,9 @@
-<?php
-class Db {
+<?php namespace inc;
 
-    //use DbMySQL;
-    use DbSQLite3;
-    use RenderSmarty;
+class database {
+
+    use dbsqlite3;
+    use rendersmarty;
 
     protected $separator_unit = ' » '; // Разделитель названий в должности
     protected $operator;

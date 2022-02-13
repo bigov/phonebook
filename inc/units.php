@@ -1,7 +1,7 @@
-<?php
+<?php namespace inc;
 
 // режим редактирования данных должностей
-class Units extends Db {
+class units extends database {
 
     public function show() {
         if ( $this->operator['level'] < 50 ) {

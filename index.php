@@ -1,33 +1,48 @@
 <?php
+declare(encoding='UTF-8');
 
-if( !isset( $phones_open )) {
-    $phones_open = true;
-    require_once 'dir_def.php';
-    require( INC_DIR . 'conf.php' );
-    require_once( INC_DIR . 'func.php' );
-    set_constants();
-    spl_autoload_register( 'autoload_class' );
-    unregister_GLOBALS();
-	
+// -------------------- configure section here ------------------- //
+define( 'DBNAME', "phones.sqlite");  // файл базы данных
+define( 'DEFAULT_PODR', '2');        // индекс подразделения по-умолчанию
+define( 'MAX_LEVEL', 51 );
+define( 'ENCODING', 'UTF-8' );
+
+ini_set('display_startup_errors', 1);
+ini_set('display_errors', 1);
+// -------------------- end configure section -------------------- //
+
+$hostname = 'localhost';
+if (isset($_SERVER['HTTP_HOST'])) $hostname = $_SERVER['HTTP_HOST']; 
+define( 'DS', DIRECTORY_SEPARATOR );
+define( 'ABSPATH', dirname(__FILE__) . DS );
+define( 'INC_DIR', ABSPATH . 'inc' . DS);
+mb_internal_encoding( ENCODING );
+define( 'PHOTOS', 'photos' . DS );
+define( 'HOSTNAME', $hostname );
+define( 'DEFAULT_MODE', 'job');
+define( 'DEFAULT_FUNC', 'error');
+
+require_once( INC_DIR . 'func.php' );
+\spl_autoload_register();
+inc\set_constants();
+
     switch ( MODE ) {
       case 'view':
-      	$book = new Viewer();
+        $book = new inc\viewer();
         break;
 	case 'operator':
-        $book = new Control();
+        $book = new inc\control();
         break;
 	case 'job':
-        $book = new Jobs();
+	    $book = new inc\jobs();
         break;
       case 'units':
-        $book = new Units();
+        $book = new inc\units();
         break;
       case 'employer':
-        $book = new Emps();
+        $book = new inc\employees();
         break;
 	default:
-        $book = new Viewer();
+        $book = new inc\viewer();
     }
     $book->show();
-}
-

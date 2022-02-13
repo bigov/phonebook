@@ -14,10 +14,10 @@
   <td>кабинет:</th>
   <td><input name="kab" class="edit_on" type="text" value=""></td>
 </tr><tr>
-  <td>осн.телефон:</th>
+  <td>телефон офисный:</th>
   <td><input name="phone" class="edit_on" type="text" value="00-00-00"></td>
 </tr><tr>
-  <td>факс, тел.:</th>
+  <td>телефон городской:</th>
   <td><input name="fax" class="edit_on" type="text" value=""></td>
 </tr><tr>
   <td>опции:</th>

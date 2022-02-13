@@ -10,11 +10,11 @@
 </tr><tr>
 	<th>сотрудник: </th><td>{$form_data.new_name}</td>
 </tr><tr>
-	<th>основной телефон:</th><td>{$form_data.phone}</td>
+	<th>телефон внутренний:</th><td>{$form_data.phone}</td>
 </tr><tr>
-	<th>факс, доп. телефон:</th><td>{$form_data.fax}</td>
+	<th>телефон прямой:</th><td>{$form_data.fax}</td>
 </tr><tr>
-	<th>домашний, мобильный:</th><td>{$form_data.new_phones}</td>
+	<th>номер мобильного:</th><td>{$form_data.new_phones}</td>
 </tr><tr>
 	<th>email:</th><td>{$form_data.new_email}</td>
 </tr></tbody></table>
