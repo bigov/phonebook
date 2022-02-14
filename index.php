@@ -2,8 +2,8 @@
 declare(encoding='UTF-8');
 
 // -------------------- configure section here ------------------- //
-define( 'DBNAME', "phones.sqlite");  // файл базы данных
-define( 'DEFAULT_PODR', '2');        // индекс подразделения по-умолчанию
+define( 'DBNAME', "db/phones.sqlite");  // файл базы данных
+define( 'DEFAULT_PODR', '2');           // индекс подразделения по-умолчанию
 define( 'MAX_LEVEL', 51 );
 define( 'ENCODING', 'UTF-8' );
 

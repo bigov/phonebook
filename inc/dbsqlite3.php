@@ -562,8 +562,8 @@ trait dbsqlite3 {
 
         $sql = sprintf("INSERT INTO \"units_history\""
             ."( \"unitid\", \"unit\", \"parent\", \"order\", \"opid\", \"ip\", \"date\")"
-            ." SELECT \"unitid\", \"unit\", \"parent\", \"order\", %d, '%s', NOW()"
-            ."FROM \"units\" WHERE \"unitid\"=%d"
+            ." SELECT \"unitid\", \"unit\", \"parent\", \"order\", %d, '%s', date('now')"
+            ." FROM \"units\" WHERE \"unitid\"=%d"
             , $q['opid'], $q['opip'], $q['unitid']);
 
         return $this->insert_sqlite($sql);

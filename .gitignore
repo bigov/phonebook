@@ -6,4 +6,5 @@ inc/config.php
 .project
 .swp
 phones.sqlite
+db/phones.sqlite
 
