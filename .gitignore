@@ -5,4 +5,5 @@ inc/config.php
 .buildpath
 .project
 .swp
+phones.sqlite
 
