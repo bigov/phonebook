@@ -1,6 +1,5 @@
-templates_c
-photos
-inc/config.php
+templates_c/*
+photos/*
 .settings
 .buildpath
 .project

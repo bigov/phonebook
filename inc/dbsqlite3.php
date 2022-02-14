@@ -550,7 +550,7 @@ trait dbsqlite3 {
       $sql = sprintf("UPDATE `units` SET `unit`='%s', `parent`=%d, "
           . "`order`=%d WHERE `unitid`=%d LIMIT 1;"
           , $q['unit'], $q['parent'], $q['order'], $q['unitid']);
-      $this->db_query_row($sql);
+      $this->exec_sqlite($sql);
       return true;
     }
 
