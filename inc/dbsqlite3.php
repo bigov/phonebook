@@ -263,10 +263,8 @@ trait dbsqlite3 {
      */
     protected function name_delete( $id ) {
         if (empty($id)){ err('ERR: name_delete expect ID');}
-
-        $sql = "DELETE FROM `names` WHERE `id`='$id' LIMIT 1;";
-        $this->db_query_row($sql);
-        return true;
+        $sql = "DELETE FROM `names` WHERE `id`='$id';";
+        return $this->sqlite_exec($sql);
     }
 
     /**
@@ -309,9 +307,9 @@ trait dbsqlite3 {
     protected function job_backup( $q )
     {
         $this->check_params($q, array('opid', 'opip', 'jobid'));
-        $sql = sprintf("INSERT `jobs_history` ( `jobid`, `unitid`, `kab`, `job`, `phone`, "
+        $sql = sprintf("INSERT INTO `jobs_history` ( `jobid`, `unitid`, `kab`, `job`, `phone`, "
             . " `fax`, `order`, `anonid`, `opid`, `ip`, `date` ) SELECT `jobid`, "
-            . "`unitid`, `kab`, `job`, `phone`, `fax`, `order`, `anonid`, %d, '%s', NOW() "
+            . "`unitid`, `kab`, `job`, `phone`, `fax`, `order`, `anonid`, %d, '%s', date('now') "
             . "FROM `jobs` WHERE `jobid`=%d", $q['opid'], $q['opip'], $q['jobid']);
         return $this->sqlite_insert($sql);
     }
@@ -367,9 +365,8 @@ trait dbsqlite3 {
         if (empty($jobid)) {err('Ошибка вызова функции job_delete()');}
         $jobid = (int) $jobid;
         if ($jobid < 1){err('Ошибка вызова функции job_delete()');}
-        $sql = "DELETE FROM `jobs` WHERE `jobid`=$jobid LIMIT 1;";
-        $this->db_query_row($sql);
-        return true;
+        $sql = "DELETE FROM `jobs` WHERE `jobid`=$jobid;";
+        return $this->sqlite_exec($sql);
     }
 
     /**
@@ -622,7 +619,7 @@ trait dbsqlite3 {
          LEFT JOIN `units` ON `jobs`.`unitid`=`units`.`unitid`
          WHERE `names`.`jobid`={$job} ";
 
-        return $this->db_query($sql);
+        return $this->sqlite_query($sql);
     }
 
     /**
@@ -705,9 +702,8 @@ trait dbsqlite3 {
      * Есть ли ожидающие изменений записи по сотрудникам
      */
     protected function exist_name_mod($id) {
-        $sql = "SELECT COUNT(*) as n FROM `names_mod` WHERE `id`='$id';";
-        $row = $this->sqlite_query($sql);
-        $num = (int) $row['n'];
+        $sql = "SELECT COUNT(`id`) FROM `names_mod` WHERE `id`='$id';";
+        $num = (int) $this->sqlite_query_single($sql);
         if ($num > 0) {
             return true;
         }
@@ -717,10 +713,10 @@ trait dbsqlite3 {
     /**
      * Есть ли ожидающие изменений записи по сотрудникам
      */
-    protected function exist_job_mod($jobid) {
-        $sql = "SELECT COUNT(*) as n FROM `jobs_mod` WHERE `jobid`='$jobid';";
-        $row = $this->sqlite_query($sql);
-      $num = (int) $row['n'];
+    protected function exist_job_mod($jobid)
+    {
+        $sql = "SELECT COUNT(`jobid`) FROM `jobs_mod` WHERE `jobid`='$jobid';";
+        $num = (int) $this->sqlite_query_single($sql);
         if ($num > 0) {
             return true;
         }
