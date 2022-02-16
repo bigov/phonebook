@@ -297,8 +297,7 @@ trait dbsqlite3 {
             $q['unitid'], $q['kab'], $q['job'], $q['phone'], $q['fax'],
             $q['order'], $q['anonid'], $q['jobid']);
 
-        $this->db_query_row($sql);
-        return true;
+        return $this->sqlite_exec($sql);
     }
 
     /**
