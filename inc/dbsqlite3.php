@@ -582,13 +582,13 @@ trait dbsqlite3 {
      * Проверка наличия вложенных объектов в подразделении
      */
     protected function unit_isempty($unitid) {
-        $sql = "SELECT `jobid` FROM `jobs` WHERE `unitid`=$unitid;";
-        $this->db_query_row($sql);
-        if ($this->last_rows > 0) return false;
+        $sql = "SELECT COUNT(`jobid`) FROM `jobs` WHERE `unitid`=$unitid;";
+        $t = (int) $this->sqlite_query_single($sql);
+        if ($t > 0) return false;
 
-        $sql = "SELECT `unitid` FROM `units` WHERE `parent`=$unitid;";
-        $this->db_query_row($sql);
-        if ($this->last_rows > 0) return false;
+        $sql = "SELECT COUNT(`unitid`) FROM `units` WHERE `parent`=$unitid;";
+        $t = (int) $this->sqlite_query_single($sql);
+        if ($t > 0) return false;
 
         return true;
     }
@@ -599,8 +599,7 @@ trait dbsqlite3 {
     protected function unit_delete( $unitid ) {
         if (empty($unitid)){ return FALSE;}
         $sql = "DELETE FROM `units` WHERE `unitid`=$unitid LIMIT 1;";
-        $this->db_query_row($sql);
-        return true;
+        return $this->sqlite_exec($sql);
     }
 
     /**
