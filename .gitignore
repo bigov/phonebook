@@ -1,5 +1,7 @@
 templates_c/*
 photos/*
+photos/new/*
+photos/old/*
 .settings
 .buildpath
 .project
