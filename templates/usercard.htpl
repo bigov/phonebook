@@ -7,10 +7,22 @@
 <table><tr><td>
 <h3>{$emp.job}</h3>
 <ul>
-<li>&nbsp;&nbsp;офисный: <span class="data">{$emp.phone}</span></li>
-<li>городской: <span class="data">{$emp.fax}</span></li>
-<li>мобильный: <span class="data">{$emp.phones}</span></li>
-<li>e-mail: <span class="data"><a href="mailto:{$emp.email}">{$emp.email}</a></span></li>
+<li>
+  <span class="reg">офисный&nbsp;&nbsp; : </span>
+  <span class="data">{$emp.phone}</span>
+</li>
+<li>
+  <span class="reg">городской : </span>
+  <span class="data">{$emp.fax}</span>
+</li>
+<li>
+  <span class="reg">мобильный : </span>
+  <span class="data">{$emp.phones}</span>
+</li>
+<li>
+  <span class="reg">e-mail&nbsp;&nbsp;&nbsp; : </span>
+  <span class="data"><a href="mailto:{$emp.email}">{$emp.email}</a></span>
+</li>
 </ul></td><td style="width: 175px;">
 
 <img class="face" alt="" src="{$img}" />

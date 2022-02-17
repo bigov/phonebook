@@ -51,9 +51,11 @@ hr.light {
   padding: 0 0 0 0;
   color: #636363;
 }
-#usercard ul li {
+#usercard ul > li {
+  line-height: 1.4em;
+}
+#usercard .reg {
   font-family: monospace;
-  color: #ff6363;
 }
 #usercard .data {
   color: #232323;

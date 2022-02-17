@@ -27,9 +27,9 @@ trait rendersmarty {
         $this->render->assign( 'level', $this->operator['level'] );
         $this->render->assign('labels', make_labels());
         $this->render->assign('ROOTURL', ROOTURL );
-      
-   }  
-   
+
+   }
+
     /**
      *  Страница подтверждения
      */
