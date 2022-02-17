@@ -91,9 +91,6 @@ div.select > select{
    color: #444;
 }
 table {
-/* border-collapse: collapse | separate
-   border-style: [none | hidden | dotted | dashed | solid | 
-               double | groove | ridge | inset | outset] {1,4} | inherit */
    border-collapse: separate; 
    border-style: hidden;
    border: none;
