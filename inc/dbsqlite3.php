@@ -168,9 +168,8 @@ trait dbsqlite3 {
     }
 
     protected function check_name_id( $id ) {
-      $sql = "SELECT COUNT(*) as n FROM `names` WHERE `id`='$id';";
-      $row = $this->db_query_row($sql);
-      $num = (int) $row['n'];
+      $sql = "SELECT COUNT(`id`) FROM `names` WHERE `id`='$id';";
+      $num = (int) $this->sqlite_query_single($sql);
       if ($num == 1) return true;
       return false;
     }
@@ -456,7 +455,7 @@ trait dbsqlite3 {
     protected function get_dutyes() {
         $sql = "SELECT * FROM `jobs` WHERE `jobid` NOT IN (SELECT `jobid` "
             ."FROM `names`) AND (NOT `anonid`='0')";
-        $dutyes = $this->db_query($sql);
+        $dutyes = $this->sqlite_query($sql);
 
         foreach ($dutyes as $id => $record) {
             $dutyes[$id]['unit'] = $this->get_path_unit($record['unitid']);
