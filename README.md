@@ -26,4 +26,6 @@ git clone --recursive https://github.com/bigov/phonebook.git
 cp phonebook/db/phones.sqlite.INSTALL phonebook/dbphones.sqlite
 ```
 
+и предоставить права записи веб-серверу на папки ``photos``, ``db``, ``templates_c``.
+
 Подробности настройки см. в [Wiki](https://github.com/bigov/phonebook/wiki)
