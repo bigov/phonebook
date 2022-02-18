@@ -1,7 +1,7 @@
-templates_c/*
-photos/*
-photos/new/*
-photos/old/*
+templates_c/*.php
+photos/*.jpg
+photos/new/*.jpg
+photos/old/*.jpg
 .settings
 .buildpath
 .project
