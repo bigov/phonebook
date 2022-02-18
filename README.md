@@ -22,7 +22,7 @@
 Для установки разместите содержимое репозитория в каталог веб-сервера и скопируйте установочный файл данных в рабочую базу:
 ```bash
 cd /var/www/html/
-git clone --recursive https://github.com/bigov/phonebook.git
+git clone --recursive --single-branch -b main https://github.com/bigov/phonebook.git
 cp phonebook/db/phones.sqlite.INSTALL phonebook/dbphones.sqlite
 ```
 
