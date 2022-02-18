@@ -17,7 +17,7 @@
 
 ## Install
 
-Для работы требуется активировать ``rewrite_module`` веб-сервера, и модуль ``php-sqlite3``.
+Для работы требуется активировать ``rewrite_module`` веб-сервера, и установить PHP-модули ``php-sqlite3``, ``php_mbstring``.
 
 Для установки разместите содержимое репозитория в каталог веб-сервера и скопируйте установочный файл данных в рабочую базу:
 ```bash
@@ -26,4 +26,4 @@ git clone --recursive https://github.com/bigov/phonebook.git
 cp phonebook/db/phones.sqlite.INSTALL phonebook/dbphones.sqlite
 ```
 
-см. описание в [Wiki](https://github.com/bigov/phonebook/wiki)
+Подробности настройки см. в [Wiki](https://github.com/bigov/phonebook/wiki)
