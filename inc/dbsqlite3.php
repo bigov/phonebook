@@ -555,7 +555,7 @@ trait dbsqlite3 {
     {
       $this->check_params($q, array('unit','parent','order','unitid'));
       $sql = sprintf("UPDATE `units` SET `unit`='%s', `parent`=%d, "
-          . "`order`=%d WHERE `unitid`=%d LIMIT 1;"
+          . "`order`=%d WHERE `unitid`=%d;"
           , $q['unit'], $q['parent'], $q['order'], $q['unitid']);
       $this->sqlite_exec($sql);
       return true;
