@@ -596,7 +596,7 @@ trait dbsqlite3 {
      */
     protected function unit_delete( $unitid ) {
         if (empty($unitid)){ return FALSE;}
-        $sql = "DELETE FROM `units` WHERE `unitid`=$unitid LIMIT 1;";
+        $sql = "DELETE FROM `units` WHERE `unitid`=$unitid;";
         return $this->sqlite_exec($sql);
     }
 
