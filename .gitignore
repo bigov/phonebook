@@ -5,7 +5,7 @@ photos/old/*.jpg
 .settings
 .buildpath
 .project
-.swp
+*.swp
 phones.sqlite
 db/phones.sqlite
 
