@@ -13,12 +13,13 @@ ini_set('display_errors', 1);
 
 $hostname = 'localhost';
 if (isset($_SERVER['HTTP_HOST'])) $hostname = $_SERVER['HTTP_HOST']; 
+define( 'HOSTNAME', $hostname );
+
 define( 'DS', DIRECTORY_SEPARATOR );
 define( 'ABSPATH', dirname(__FILE__) . DS );
 define( 'INC_DIR', ABSPATH . 'inc' . DS);
 mb_internal_encoding( ENCODING );
 define( 'PHOTOS', 'photos' . DS );
-define( 'HOSTNAME', $hostname );
 define( 'DEFAULT_MODE', 'job');
 define( 'DEFAULT_FUNC', 'error');
 
@@ -30,11 +31,11 @@ inc\set_constants();
       case 'view':
         $book = new inc\viewer();
         break;
-	case 'operator':
+      case 'operator':
         $book = new inc\control();
         break;
-	case 'job':
-	    $book = new inc\jobs();
+      case 'job':
+        $book = new inc\jobs();
         break;
       case 'units':
         $book = new inc\units();
@@ -42,7 +43,7 @@ inc\set_constants();
       case 'employer':
         $book = new inc\employees();
         break;
-	default:
+      default:
         $book = new inc\viewer();
     }
     $book->show();

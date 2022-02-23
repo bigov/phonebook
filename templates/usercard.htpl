@@ -1,5 +1,7 @@
 <div class="brand">
+{if !READONLY_MODE}
   <div id="useredit"><a href="{$url_edit}">изменить</a></div>
+{/if}
 </div>
 
 <div id="usercard">

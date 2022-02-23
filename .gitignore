@@ -8,4 +8,5 @@ photos/old/*.jpg
 *.swp
 phones.sqlite
 db/phones.sqlite
+ip_white.txt
 

@@ -1,5 +1,10 @@
 <?php namespace inc;
 
+if (READONLY_MODE)
+{
+    err("Доступ к этому разделу с адреса " . OPERATOR_IP . " закрыт.");
+}
+
 class control extends database {
 
     public function show() {

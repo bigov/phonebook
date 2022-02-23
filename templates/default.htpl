@@ -7,7 +7,9 @@
 <a class="menu" title="Скачать Справочник в виде файла" href="{$smarty.const.ROOTURL}view/download/"><img src="{$smarty.const.ROOTURL}img/shot.png" /></a>
 <a class="menu" title="Дежурные службы" href="{$smarty.const.ROOTURL}view/duty/"><img src="{$smarty.const.ROOTURL}img/duty.png" /></a>
 <a class="menu" title="Галерея фотографий" href="{$smarty.const.ROOTURL}view/photos/"><img src="{$smarty.const.ROOTURL}img/gallery.png" /></a>
+{if !READONLY_MODE}
 <a class="menu" title="Настройка" href="{$smarty.const.ROOTURL}operator/status/"><img src="{$smarty.const.ROOTURL}img/edit.png" /></a>
+{/if}
 </td>
 <td id="content">
 
