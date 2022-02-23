@@ -134,9 +134,9 @@ class viewer extends Database {
       print ("<ul id=\"acclist\" class=\"accordion\">\n\t<li id=\"current\"><a href=\"#\">Телефонный справочник</a>");
 
       // По-умолчанию экспорт выполняется только для базовой ветки справочника
-      print $this->make_ul_branch($this->make_full_list(DEFAULT_PODR));
+      //print $this->make_ul_branch($this->make_full_list(DEFAULT_PODR));
       // Если нужен полный список, то используем id корневой записи таблицы units
-      //print $this->make_ul_branch($this->make_full_list(1));
+      print $this->make_ul_branch($this->make_full_list(0));
 
       print ("\n\t</li>\n</ul>\n\n");
 
@@ -159,7 +159,6 @@ class viewer extends Database {
       $this->tabs_inc();
       $row = "";
       $this->tabs_inc();
-      //foreach ($branch as $i => $val) {
       foreach ($branch as $val) {
               $row = $row . $this->indent() . "<li><a href=\"#i\">" . $val['unit']. "</a>";
           if (isset($val['jobs'])) {

@@ -52,21 +52,25 @@ class database {
         return $full_list;
     }
 
-    /**
-     * Создание полного списка справочника (для экспорта)
-     */
-    protected function make_full_list( $unitid = 0 ) {
-  $full_list = $this->get_branch_assoc( $unitid );
+  /**
+   * Создание полного списка справочника (для экспорта)
+   */
+  protected function make_full_list( $unitid = 1 )
+  {
+    $full_list = $this->get_branch_assoc( $unitid );
 
-  foreach( $full_list as $key => $branch ) {
-            $sub_list = $this->make_full_list( $branch['unitid'] );
-            if ( count( $sub_list ) > 0 ) {
-      $full_list[$key]['branch'] = $sub_list;
-            }
-            $jobs = $this->get_jobs_array( $branch['unitid'] );
-            if ( count( $jobs ) > 0 ) {
-              $full_list[$key]['jobs'] = $jobs;
-            }
+    foreach( $full_list as $key => $branch )
+    {
+      $sub_list = $this->make_full_list( $branch['unitid'] );
+      if ( count( $sub_list ) > 0 )
+      {
+        $full_list[$key]['branch'] = $sub_list;
+      }
+      $jobs = $this->get_jobs_array( $branch['unitid'] );
+      if ( count( $jobs ) > 0 )
+      {
+        $full_list[$key]['jobs'] = $jobs;
+      }
     }
 
     return $full_list;

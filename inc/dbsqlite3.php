@@ -472,23 +472,23 @@ trait dbsqlite3 {
      *  Создание ассоциативного от unitid массива массива дочерних
      *  подразделений по id родителя
      */
-    protected function get_branch_assoc($id = '', $order = "order") {
-        $dst_arr = array();
+    protected function get_branch_assoc($id = 0, $order = "order")
+    {
+      $dst_arr = array();
       $branch = $this->get_branch_array($id, $order);
-        if (is_array($branch)) {
-      foreach ($branch as $unit) {
-        $dst_arr[$unit['unitid']] = $unit;
-          }
-        }
-        unset($branch);
-        return $dst_arr;
+      if (is_array($branch))
+      {
+        foreach ($branch as $unit) $dst_arr[$unit['unitid']] = $unit;
+      }
+      unset($branch);
+      return $dst_arr;
     }
 
     /**
      *  Получение списка дочерних подразделений
      *  по id родителя
      */
-    protected function get_branch_array($id = '', $order = "order") {
+    protected function get_branch_array($id = 0, $order = "order") {
         if (empty($id)) { $id = 0; }
         $sql = "SELECT * FROM `units` WHERE `units`.`parent`=$id "
              . "ORDER BY `units`.`$order`;";
