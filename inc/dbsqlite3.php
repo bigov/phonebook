@@ -93,6 +93,8 @@ trait dbsqlite3 {
    */
   protected function sqlite_exec($sql)
   {
+      if(READONLY_MODE) return 0;
+
       if(is_null($this->db)) $this->link();
       if(!$this->db->exec($sql)) $this->sqlite_show_err($sql);
       return TRUE;
@@ -105,6 +107,8 @@ trait dbsqlite3 {
    */
   protected function sqlite_insert($sql)
   {
+      if(READONLY_MODE) return 0;
+
       if(is_null($this->db)) $this->link();
       if(!$this->db->exec($sql)) $this->sqlite_show_err($sql);
       $this->last_id = $this->db->lastInsertRowID();
@@ -183,10 +187,10 @@ trait dbsqlite3 {
         if (empty($q['id'])) { return FALSE; }
 
         $sql = sprintf("UPDATE `names` SET `jobid`=%d, `name`='%s', "
-                . "`phones`='%s', `email`='%s' WHERE `id`=%d LIMIT 1;",
+                . "`phones`='%s', `email`='%s' WHERE `id`=%d;",
             $q['jobid'], $q['name'], $q['phones'], $q['email'], $q['id'] );
 
-        $this->db_query($sql);
+        $this->sqlite_exec($sql);
         return true;
     }
 
