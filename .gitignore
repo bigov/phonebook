@@ -8,5 +8,6 @@ photos/old/*.jpg
 *.swp
 phones.sqlite
 db/phones.sqlite
+db/config.php
 ip_white.txt
 
