@@ -324,8 +324,7 @@ trait dbsqlite3 {
         $this->check_params($q, array('id','jobid'));
         $sql = sprintf("UPDATE `names` SET `jobid`=%d WHERE `id`=%d LIMIT 1;",
                 $q['jobid'], $q['id']);
-        $this->db_query_row($sql);
-        return true;
+        return $this->sqlite_exec($sql);
     }
 
     /**
