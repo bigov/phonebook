@@ -57,6 +57,9 @@ trait dbsqlite3 {
        exit;
     }
     $this->db = new \SQLite3(\DBNAME, SQLITE3_OPEN_READWRITE);
+    #$this->db->enableExtensions(true);
+    $this->db->loadExtension('pcre.so');
+
     return;
   }
 
