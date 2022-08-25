@@ -23,7 +23,7 @@
 sqlite3.extension_dir = "/usr/lib/sqlite3"
 ```
 
-Если у Вас RehHat/Centos, то придется расширение [установить самостоятельно](https://github.com/bigov/phonebook/issues/6#issuecomment-1225281633)
+Если у Вас RedHat/Centos, то придется расширение [установить самостоятельно](https://github.com/bigov/phonebook/issues/6#issuecomment-1225281633)
 
 Активировать ``rewrite_module`` веб-сервера, и установить PHP-модули ``php-sqlite3``, ``php_mbstring``.
 
